@@ -35,7 +35,13 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         return "Provider: \(name)"
     }
     
-    public func login(scope: [String], origin: String, viewController: UIViewController?, callback: @escaping Callback<AuthToken, ReachFiveError>) {
+    public func login(
+        scope: [String],
+        origin: String,
+        viewController: UIViewController?
+    ) -> Future<AuthToken, ReachFiveError> {
+        let promise = Promise<AuthToken, ReachFiveError>()
+        
         LoginManager().logIn(permissions: [.email, .publicProfile], viewController: viewController) { result in
             switch (result) {
             case .success(_, _, let token):
@@ -52,17 +58,19 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
                     .loginWithProvider(loginProviderRequest: loginProviderRequest)
                     .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
                     .onSuccess { authToken in
-                        callback(.success(authToken))
+                        promise.success(authToken)
                     }
                     .onFailure { error in
-                        callback(.failure(error))
-                }
+                        promise.failure(error)
+                    }
             case .cancelled:
-                callback(.failure(.AuthCanceled))
+                promise.failure(.AuthCanceled)
             case .failed(let error):
-                callback(.failure(.TechnicalError(reason: error.localizedDescription)))
+                promise.failure(.TechnicalError(reason: error.localizedDescription))
             }
         }
+        
+        return promise.future
     }
     
     public func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
