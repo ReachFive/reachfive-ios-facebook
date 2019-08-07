@@ -85,8 +85,8 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         AppEvents.activateApp()
     }
     
-    public func logout() -> Future<Void, ReachFiveError> {
+    public func logout() -> Future<(), ReachFiveError> {
         LoginManager().logOut()
-        return Future()
+        return Future.init(value: ())
     }
 }
