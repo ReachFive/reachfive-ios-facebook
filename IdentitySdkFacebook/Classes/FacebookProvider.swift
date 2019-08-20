@@ -13,8 +13,18 @@ public class FacebookProvider: ProviderCreator {
     
     public init() {}
 
-    public func create(sdkConfig: SdkConfig, providerConfig: ProviderConfig, reachFiveApi: ReachFiveApi) -> Provider {
-        return ConfiguredFacebookProvider(sdkConfig: sdkConfig, providerConfig: providerConfig, reachFiveApi: reachFiveApi)
+    public func create(
+        sdkConfig: SdkConfig,
+        providerConfig: ProviderConfig,
+        reachFiveApi: ReachFiveApi,
+        clientConfigResponse: ClientConfigResponse
+    ) -> Provider {
+        return ConfiguredFacebookProvider(
+            sdkConfig: sdkConfig,
+            providerConfig: providerConfig,
+            reachFiveApi: reachFiveApi,
+            clientConfigResponse: clientConfigResponse
+        )
     }
 }
 
@@ -24,11 +34,18 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
     var sdkConfig: SdkConfig
     var providerConfig: ProviderConfig
     var reachFiveApi: ReachFiveApi
+    var clientConfigResponse: ClientConfigResponse
     
-    public init(sdkConfig: SdkConfig, providerConfig: ProviderConfig, reachFiveApi: ReachFiveApi) {
+    public init(
+        sdkConfig: SdkConfig,
+        providerConfig: ProviderConfig,
+        reachFiveApi: ReachFiveApi,
+        clientConfigResponse: ClientConfigResponse
+    ) {
         self.sdkConfig = sdkConfig
         self.providerConfig = providerConfig
         self.reachFiveApi = reachFiveApi
+        self.clientConfigResponse = clientConfigResponse
     }
     
     public override var description: String {
@@ -36,7 +53,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
     }
     
     public func login(
-        scope: [String],
+        scope: [String]?,
         origin: String,
         viewController: UIViewController?
     ) -> Future<AuthToken, ReachFiveError> {
@@ -52,7 +69,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
                     origin: origin,
                     clientId: self.sdkConfig.clientId,
                     responseType: "token",
-                    scope: scope.joined(separator: " ")
+                    scope: scope != nil ? scope!.joined(separator: " ") : self.clientConfigResponse.scope
                 )
                 self.reachFiveApi
                     .loginWithProvider(loginProviderRequest: loginProviderRequest)
