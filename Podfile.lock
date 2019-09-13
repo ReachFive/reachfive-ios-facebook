@@ -16,7 +16,7 @@ PODS:
     - FBSDKCoreKit/Basics
   - FBSDKLoginKit (5.5.0):
     - FBSDKCoreKit (~> 5.0)
-  - IdentitySdkCore (5.1.0):
+  - IdentitySdkCore (5.1.1):
     - Alamofire (~> 4.9)
     - BrightFutures (~> 8.0)
     - CryptoSwift (~> 1.0)
@@ -48,7 +48,7 @@ SPEC CHECKSUMS:
   FacebookLogin: 6cee9fd6e1fe976fe8f7eec199e27b28b14f5d63
   FBSDKCoreKit: 7ade9cfea30eef2f6cf105a1aa904f89ea68fb7d
   FBSDKLoginKit: bb28062f24e79590c44ba03297ca9bea4b6436d2
-  IdentitySdkCore: 0ebac7cac2ad6617f3794a29415c719f698e57f2
+  IdentitySdkCore: 6402db1c3fff9de0210425e047b1b0ffd7037ed1
 
 PODFILE CHECKSUM: 69a72c9811c42f9d256f7ff79c148f8ddfec0dce
 
