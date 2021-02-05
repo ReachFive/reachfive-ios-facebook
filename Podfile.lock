@@ -1,31 +1,25 @@
 PODS:
   - Alamofire (5.2.2)
   - BrightFutures (8.0.0)
-  - CryptoSwift (1.3.2)
-  - FacebookCore (0.9.0):
-    - FBSDKCoreKit (~> 5.0)
-  - FacebookLogin (0.9.0):
-    - FacebookCore (~> 0.9.0)
-    - FBSDKCoreKit (~> 5.0)
-    - FBSDKLoginKit (~> 5.0)
-  - FBSDKCoreKit (5.15.1):
-    - FBSDKCoreKit/Basics (= 5.15.1)
-    - FBSDKCoreKit/Core (= 5.15.1)
-  - FBSDKCoreKit/Basics (5.15.1)
-  - FBSDKCoreKit/Core (5.15.1):
+  - CryptoSwift (1.3.8)
+  - FBSDKCoreKit (9.0.0):
+    - FBSDKCoreKit/Basics (= 9.0.0)
+    - FBSDKCoreKit/Core (= 9.0.0)
+  - FBSDKCoreKit/Basics (9.0.0)
+  - FBSDKCoreKit/Core (9.0.0):
     - FBSDKCoreKit/Basics
-  - FBSDKLoginKit (5.15.1):
-    - FBSDKLoginKit/Login (= 5.15.1)
-  - FBSDKLoginKit/Login (5.15.1):
-    - FBSDKCoreKit (~> 5.0)
+  - FBSDKLoginKit (9.0.0):
+    - FBSDKLoginKit/Login (= 9.0.0)
+  - FBSDKLoginKit/Login (9.0.0):
+    - FBSDKCoreKit (~> 9.0.0)
   - IdentitySdkCore (5.4.0):
     - Alamofire (~> 5.2.2)
     - BrightFutures (~> 8.0.0)
     - CryptoSwift (~> 1.3.2)
 
 DEPENDENCIES:
-  - FacebookCore (~> 0.8)
-  - FacebookLogin (~> 0.8)
+  - FBSDKCoreKit
+  - FBSDKLoginKit
   - IdentitySdkCore (from `../IdentitySdkCore.podspec`)
 
 SPEC REPOS:
@@ -33,8 +27,6 @@ SPEC REPOS:
     - Alamofire
     - BrightFutures
     - CryptoSwift
-    - FacebookCore
-    - FacebookLogin
     - FBSDKCoreKit
     - FBSDKLoginKit
 
@@ -45,13 +37,11 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   BrightFutures: f8427b46feabaf73c5e71ace7d86d65dfbb47696
-  CryptoSwift: 093499be1a94b0cae36e6c26b70870668cb56060
-  FacebookCore: ba86524b66cfa86d0f8e65d08faa8504a9f732dd
-  FacebookLogin: 6cee9fd6e1fe976fe8f7eec199e27b28b14f5d63
-  FBSDKCoreKit: 1d5acf7c9d7a2f92bb1a242dc60cae5b7adb91df
-  FBSDKLoginKit: f1ea8026a58b52d30c9f2e6a58ca7d813619fb83
+  CryptoSwift: 01b0f0cba1d5c212e5a335ff6c054fb75a204f00
+  FBSDKCoreKit: ac6cc500b8e104bb9a4dd20b1527b5d199123c2e
+  FBSDKLoginKit: e9b6542fdee322333502ab497f628b011dce7d78
   IdentitySdkCore: 69bbd895c54c33e0f7e5e1836e53c18246659e98
 
-PODFILE CHECKSUM: 69a72c9811c42f9d256f7ff79c148f8ddfec0dce
+PODFILE CHECKSUM: 276a353dd0c94334c4e3999081f957bd4d070043
 
 COCOAPODS: 1.10.0
