@@ -20,7 +20,7 @@ PODS:
     - EllipticCurveKeyPair (~> 2.0)
     - KeychainAccess (~> 4.2.1)
     - PromiseKit (~> 6.13.1)
-    - WebAuthnKit (~> 0.9.5)
+    - WebAuthnKit (~> 0.9.6)
   - KeychainAccess (4.2.2)
   - PromiseKit (6.13.1):
     - PromiseKit/CorePromise (= 6.13.1)
@@ -65,7 +65,7 @@ SPEC CHECKSUMS:
   EllipticCurveKeyPair: 8c69e5238a6e47243a10a48fbd41dfb19110b22e
   FBSDKCoreKit: fada1a6a0076724678993ff05a633848765ff18c
   FBSDKLoginKit: d5ffe6d808897019ccf16feb6f0a7ab260bc5cd6
-  IdentitySdkCore: fedd1d5c47ebb9d5a43896de5bf850b1e47490c2
+  IdentitySdkCore: b9b8f0381b82af504bbf7c4d630472521b2cd611
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   WebAuthnKit: b778fee9d900b6b2697fbcac1e95b4609356801d
