@@ -13,7 +13,7 @@ PODS:
     - FBSDKLoginKit/Login (= 9.0.1)
   - FBSDKLoginKit/Login (9.0.1):
     - FBSDKCoreKit (~> 9.0.1)
-  - IdentitySdkCore (5.6.1):
+  - IdentitySdkCore (5.6.2):
     - Alamofire (~> 5.6.1)
     - BrightFutures (~> 8.1.0)
     - CryptoSwift (~> 1.3.8)
@@ -58,7 +58,7 @@ SPEC CHECKSUMS:
   EllipticCurveKeyPair: 8c69e5238a6e47243a10a48fbd41dfb19110b22e
   FBSDKCoreKit: fada1a6a0076724678993ff05a633848765ff18c
   FBSDKLoginKit: d5ffe6d808897019ccf16feb6f0a7ab260bc5cd6
-  IdentitySdkCore: 985790f7d5db2da203d8c359e05b6f166de6e9c1
+  IdentitySdkCore: 1b5c645de6268c41aaeccc415e572588d68c9ac8
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
 
