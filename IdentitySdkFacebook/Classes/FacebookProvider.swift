@@ -2,8 +2,6 @@ import Foundation
 import UIKit
 import IdentitySdkCore
 import BrightFutures
-import FacebookCore
-import FacebookLogin
 import FBSDKLoginKit
 
 public class FacebookProvider: ProviderCreator {
@@ -57,37 +55,44 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         origin: String,
         viewController: UIViewController?
     ) -> Future<AuthToken, ReachFiveError> {
-        let promise = Promise<AuthToken, ReachFiveError>()
+        if let token = AccessToken.current, !token.isExpired {
+            // User is already logged in.
+            let loginProviderRequest = createLoginRequest(token: token, origin: origin, scope: scope)
+            return reachFiveApi
+                .loginWithProvider(loginProviderRequest: loginProviderRequest)
+                .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
+        }
         
-        LoginManager().logIn(permissions: [.email, .publicProfile], viewController: viewController) { result in
-            switch (result) {
-            case .success(_, _, let token):
-                let loginProviderRequest = LoginProviderRequest(
-                    provider: self.providerConfig.provider,
-                    providerToken: token.tokenString,
-                    code: nil,
-                    origin: origin,
-                    clientId: self.sdkConfig.clientId,
-                    responseType: "token",
-                    scope: scope != nil ? scope!.joined(separator: " ") : self.clientConfigResponse.scope
-                )
-                self.reachFiveApi
-                    .loginWithProvider(loginProviderRequest: loginProviderRequest)
-                    .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
-                    .onSuccess { authToken in
-                        promise.success(authToken)
-                    }
-                    .onFailure { error in
-                        promise.failure(error)
-                    }
-            case .cancelled:
+        let promise = Promise<AuthToken, ReachFiveError>()
+        LoginManager().logIn(permissions: providerConfig.scope ?? ["email", "public_profile"], from: viewController) { (result, error) in
+            guard let result = result else {
+                let reason = error == nil ? "No result" : error!.localizedDescription
+                promise.failure(.TechnicalError(reason: reason))
+                return
+            }
+            if (result.isCancelled) {
                 promise.failure(.AuthCanceled)
-            case .failed(let error):
-                promise.failure(.TechnicalError(reason: error.localizedDescription))
+            } else {
+                let loginProviderRequest = self.createLoginRequest(token: result.token, origin: origin, scope: scope)
+                promise.completeWith(self.reachFiveApi
+                    .loginWithProvider(loginProviderRequest: loginProviderRequest)
+                    .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) }))
             }
         }
         
         return promise.future
+    }
+    
+    private func createLoginRequest(token: AccessToken?, origin: String, scope: [String]?) -> LoginProviderRequest {
+        LoginProviderRequest(
+            provider: providerConfig.provider,
+            providerToken: token?.tokenString,
+            code: nil,
+            origin: origin,
+            clientId: sdkConfig.clientId,
+            responseType: "token",
+            scope: scope != nil ? scope!.joined(separator: " ") : self.clientConfigResponse.scope
+        )
     }
     
     public func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
@@ -98,8 +103,12 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         FBSDKCoreKit.ApplicationDelegate.shared.application(app, open: url, options: options)
     }
     
+    public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        FBSDKCoreKit.ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
     public func applicationDidBecomeActive(_ application: UIApplication) {
-        AppEvents.activateApp()
+        AppEvents.shared.activateApp()
     }
     
     public func logout() -> Future<(), ReachFiveError> {
