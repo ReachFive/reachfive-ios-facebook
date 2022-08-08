@@ -12,14 +12,14 @@ public class FacebookProvider: ProviderCreator {
     public var name: String = NAME
     
     public init() {}
-
+    
     public func create(
         sdkConfig: SdkConfig,
         providerConfig: ProviderConfig,
         reachFiveApi: ReachFiveApi,
         clientConfigResponse: ClientConfigResponse
     ) -> Provider {
-        return ConfiguredFacebookProvider(
+        ConfiguredFacebookProvider(
             sdkConfig: sdkConfig,
             providerConfig: providerConfig,
             reachFiveApi: reachFiveApi,
@@ -30,7 +30,7 @@ public class FacebookProvider: ProviderCreator {
 
 public class ConfiguredFacebookProvider: NSObject, Provider {
     public var name: String = FacebookProvider.NAME
-
+    
     var sdkConfig: SdkConfig
     var providerConfig: ProviderConfig
     var reachFiveApi: ReachFiveApi
@@ -49,7 +49,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
     }
     
     public override var description: String {
-        return "Provider: \(name)"
+        "Provider: \(name)"
     }
     
     public func login(
@@ -91,11 +91,11 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
     }
     
     public func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return FBSDKCoreKit.ApplicationDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+        FBSDKCoreKit.ApplicationDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
-    public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-        return FBSDKCoreKit.ApplicationDelegate.shared.application(app, open: url, options: options)
+    public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
+        FBSDKCoreKit.ApplicationDelegate.shared.application(app, open: url, options: options)
     }
     
     public func applicationDidBecomeActive(_ application: UIApplication) {
