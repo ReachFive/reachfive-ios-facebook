@@ -55,7 +55,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         origin: String,
         viewController: UIViewController?
     ) -> Future<AuthToken, ReachFiveError> {
-        if let token = AccessToken.current, !token.isExpired {
+        if let token = FBSDKCoreKit.AccessToken.current, !token.isExpired {
             // User is already logged in.
             let loginProviderRequest = createLoginRequest(token: token, origin: origin, scope: scope)
             return reachFiveApi
@@ -113,6 +113,6 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
     
     public func logout() -> Future<(), ReachFiveError> {
         LoginManager().logOut()
-        return Future.init(value: ())
+        return Future(value: ())
     }
 }
