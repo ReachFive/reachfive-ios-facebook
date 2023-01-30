@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.6.2)
+  - Alamofire (5.6.4)
   - BrightFutures (8.2.0)
   - CryptoSwift (1.5.1)
   - FBAEMKit (14.1.0):
@@ -10,7 +10,7 @@ PODS:
   - FBSDKCoreKit_Basics (14.1.0)
   - FBSDKLoginKit (14.1.0):
     - FBSDKCoreKit (= 14.1.0)
-  - IdentitySdkCore (5.7.1):
+  - IdentitySdkCore (5.8.0):
     - Alamofire (~> 5.6.1)
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.5.1)
@@ -35,14 +35,14 @@ EXTERNAL SOURCES:
     :path: "../IdentitySdkCore.podspec"
 
 SPEC CHECKSUMS:
-  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
   BrightFutures: 67e0e8cd974ab9f6c04650cc64153f7adf1ec489
   CryptoSwift: c4f2debceb38bf44c80659afe009f71e23e4a082
   FBAEMKit: a899515e45476027f73aef377b5cffadcd56ca3a
   FBSDKCoreKit: 24f8bc8d3b5b2a8c5c656a1329492a12e8efa792
   FBSDKCoreKit_Basics: 6e578c9bdc7aa1365dbbbde633c9ebb536bcaa98
   FBSDKLoginKit: 787de205d524c3a4b17d527916f1d066e4361660
-  IdentitySdkCore: 1fa8c4cac0c951bb37bf94f479f7b193d8f138a0
+  IdentitySdkCore: 95424c1016824eb9a92b3f570b1c10085b6af5de
 
 PODFILE CHECKSUM: 43759688747cfc22b195a09dab78d21d04a91a53
 
