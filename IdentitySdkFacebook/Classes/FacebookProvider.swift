@@ -66,7 +66,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         let promise = Promise<AuthToken, ReachFiveError>()
         LoginManager().logIn(permissions: providerConfig.scope ?? ["email", "public_profile"], from: viewController) { (result, error) in
             guard let result else {
-                let reason = error == nil ? "No result" : error!.localizedDescription
+                let reason = error?.localizedDescription ?? "No user"
                 promise.failure(.TechnicalError(reason: reason))
                 return
             }
