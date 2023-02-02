@@ -65,12 +65,12 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         
         let promise = Promise<AuthToken, ReachFiveError>()
         LoginManager().logIn(permissions: providerConfig.scope ?? ["email", "public_profile"], from: viewController) { (result, error) in
-            guard let result = result else {
+            guard let result else {
                 let reason = error == nil ? "No result" : error!.localizedDescription
                 promise.failure(.TechnicalError(reason: reason))
                 return
             }
-            if (result.isCancelled) {
+            if result.isCancelled {
                 promise.failure(.AuthCanceled)
             } else {
                 let loginProviderRequest = self.createLoginRequest(token: result.token, origin: origin, scope: scope)
