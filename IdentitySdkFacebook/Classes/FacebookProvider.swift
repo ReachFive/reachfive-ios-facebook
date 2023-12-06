@@ -110,7 +110,11 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
     public func applicationDidBecomeActive(_ application: UIApplication) {
         AppEvents.shared.activateApp()
     }
-    
+   
+    public func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        true
+    }
+
     public func logout() -> Future<(), ReachFiveError> {
         LoginManager().logOut()
         return Future(value: ())
