@@ -91,12 +91,8 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
             origin: origin,
             clientId: sdkConfig.clientId,
             responseType: "token",
-            scope: scope != nil ? scope!.joined(separator: " ") : self.clientConfigResponse.scope
+            scope: scope?.joined(separator: " ") ?? self.clientConfigResponse.scope
         )
-    }
-    
-    public func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        FBSDKCoreKit.ApplicationDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
     public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
@@ -110,7 +106,11 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
     public func applicationDidBecomeActive(_ application: UIApplication) {
         AppEvents.shared.activateApp()
     }
-    
+   
+    public func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        true
+    }
+
     public func logout() -> Future<(), ReachFiveError> {
         LoginManager().logOut()
         return Future(value: ())
