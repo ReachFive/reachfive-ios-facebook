@@ -13,6 +13,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2AB8491C2BB338DC00F84026 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		34173219229D9FE000681CFD /* Classes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Classes; sourceTree = "<group>"; };
 		34DD7DC1229C222D007311FE /* IdentitySdkFacebook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IdentitySdkFacebook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		34DD7DC4229C222D007311FE /* IdentitySdkFacebook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentitySdkFacebook.h; sourceTree = "<group>"; };
@@ -58,6 +59,7 @@
 				34173219229D9FE000681CFD /* Classes */,
 				34DD7DC4229C222D007311FE /* IdentitySdkFacebook.h */,
 				34DD7DC5229C222D007311FE /* Info.plist */,
+				2AB8491C2BB338DC00F84026 /* PrivacyInfo.xcprivacy */,
 			);
 			path = IdentitySdkFacebook;
 			sourceTree = "<group>";
