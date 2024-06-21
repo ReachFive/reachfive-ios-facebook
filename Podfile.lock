@@ -2,21 +2,21 @@ PODS:
   - Alamofire (5.9.1)
   - BrightFutures (8.2.0)
   - CryptoSwift (1.8.2)
-  - DeviceKit (5.2.3)
-  - FBAEMKit (17.0.0):
-    - FBSDKCoreKit_Basics (= 17.0.0)
-  - FBSDKCoreKit (17.0.0):
-    - FBAEMKit (= 17.0.0)
-    - FBSDKCoreKit_Basics (= 17.0.0)
-  - FBSDKCoreKit_Basics (17.0.0)
-  - FBSDKLoginKit (17.0.0):
-    - FBSDKCoreKit (= 17.0.0)
-  - IdentitySdkCore (6.2.0):
+  - DeviceKit (5.4.0)
+  - FBAEMKit (17.0.2):
+    - FBSDKCoreKit_Basics (= 17.0.2)
+  - FBSDKCoreKit (17.0.2):
+    - FBAEMKit (= 17.0.2)
+    - FBSDKCoreKit_Basics (= 17.0.2)
+  - FBSDKCoreKit_Basics (17.0.2)
+  - FBSDKLoginKit (17.0.2):
+    - FBSDKCoreKit (= 17.0.2)
+  - IdentitySdkCore (6.3.0):
     - Alamofire (~> 5.8)
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.8)
     - DeviceKit (~> 5.1)
-  - IdentitySdkFacebook (6.2.0):
+  - IdentitySdkFacebook (6.3.0):
     - FBSDKCoreKit (~> 17.0.0)
     - FBSDKLoginKit (~> 17.0.0)
     - IdentitySdkCore (~> 6)
@@ -46,13 +46,13 @@ SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   BrightFutures: 67e0e8cd974ab9f6c04650cc64153f7adf1ec489
   CryptoSwift: c63a805d8bb5e5538e88af4e44bb537776af11ea
-  DeviceKit: 4504e64df8f8ad1c42aae68f30ece5b51d56022a
-  FBAEMKit: 31a20c2d8744d8c57d3a5b7ae4e27b4fdd819193
-  FBSDKCoreKit: dac911b656816f8d0b06e5fa4bac60e89505bb3b
-  FBSDKCoreKit_Basics: 92b7b7458d57091370b0b6cc197578874c3b4b16
-  FBSDKLoginKit: 5d5271ebfd1e39c6b071de8db5c4bd6255be3561
-  IdentitySdkCore: c7fcd8336521bfb1152f13338580aa9dca145b84
-  IdentitySdkFacebook: 09a4430446c98130dd75f187e8023e387b6624d4
+  DeviceKit: bd34bb1766d926c3cc5a5f6e3e9a6dd10148b805
+  FBAEMKit: 619f96ea65427e8afca240d5b0f4703738dfdf5c
+  FBSDKCoreKit: a5f384db2e9ee84e98494fed8f983d2bd79accff
+  FBSDKCoreKit_Basics: d35c775aaf243a2d731dfae7be3a74b1987285ab
+  FBSDKLoginKit: f8ca5f7ab7c4e5b93e729d94975b0db7fcc511ed
+  IdentitySdkCore: e74e8f81ce688fac4365183376e3b26f62f06b5f
+  IdentitySdkFacebook: d23f478e93658175c9f7c0f82d2501f0caf77756
 
 PODFILE CHECKSUM: ea3abfa27d2faccd30f035d9775acb6ed83dfe68
 
