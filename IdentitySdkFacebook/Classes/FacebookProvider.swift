@@ -1,6 +1,10 @@
 import Foundation
 import UIKit
+#if canImport(Reach5)
+import Reach5
+#else
 import IdentitySdkCore
+#endif
 import BrightFutures
 import FBSDKLoginKit
 

@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		14F33E0EA96F2CA5351DC8D2 /* Pods_IdentitySdkFacebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57949F2A0ADABEC4B80C53C8 /* Pods_IdentitySdkFacebook.framework */; };
+		2AB329372C3F404A0058D464 /* Reach5 in Frameworks */ = {isa = PBXBuildFile; productRef = 2AB329362C3F404A0058D464 /* Reach5 */; };
 		3417321A229D9FE000681CFD /* Classes in Resources */ = {isa = PBXBuildFile; fileRef = 34173219229D9FE000681CFD /* Classes */; };
 		34DD7DC6229C222D007311FE /* IdentitySdkFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 34DD7DC4229C222D007311FE /* IdentitySdkFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -28,6 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AB329372C3F404A0058D464 /* Reach5 in Frameworks */,
 				14F33E0EA96F2CA5351DC8D2 /* Pods_IdentitySdkFacebook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -110,6 +112,9 @@
 			dependencies = (
 			);
 			name = IdentitySdkFacebook;
+			packageProductDependencies = (
+				2AB329362C3F404A0058D464 /* Reach5 */,
+			);
 			productName = IdentitySdkFacebook;
 			productReference = 34DD7DC1229C222D007311FE /* IdentitySdkFacebook.framework */;
 			productType = "com.apple.product-type.framework";
@@ -138,6 +143,9 @@
 				Base,
 			);
 			mainGroup = 34DD7DB7229C222D007311FE;
+			packageReferences = (
+				2AB329352C3F404A0058D464 /* XCRemoteSwiftPackageReference "reachfive-ios" */,
+			);
 			productRefGroup = 34DD7DC2229C222D007311FE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -399,6 +407,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2AB329352C3F404A0058D464 /* XCRemoteSwiftPackageReference "reachfive-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReachFive/reachfive-ios.git";
+			requirement = {
+				branch = "feature/CA-1916_swift_package_manager";
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2AB329362C3F404A0058D464 /* Reach5 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2AB329352C3F404A0058D464 /* XCRemoteSwiftPackageReference "reachfive-ios" */;
+			productName = Reach5;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 34DD7DB8229C222D007311FE /* Project object */;
 }
