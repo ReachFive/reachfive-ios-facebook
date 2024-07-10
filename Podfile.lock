@@ -19,11 +19,11 @@ PODS:
   - IdentitySdkFacebook (6.3.0):
     - FBSDKCoreKit (~> 17.0.0)
     - FBSDKLoginKit (~> 17.0.0)
-    - IdentitySdkCore (~> 6)
+    - IdentitySdkCore
 
 DEPENDENCIES:
-  - IdentitySdkCore (from `../`)
-  - IdentitySdkFacebook (from `../`)
+  - IdentitySdkCore
+  - IdentitySdkFacebook (from `IdentitySdkFacebook.podspec`)
 
 SPEC REPOS:
   trunk:
@@ -35,12 +35,11 @@ SPEC REPOS:
     - FBSDKCoreKit
     - FBSDKCoreKit_Basics
     - FBSDKLoginKit
+    - IdentitySdkCore
 
 EXTERNAL SOURCES:
-  IdentitySdkCore:
-    :path: "../"
   IdentitySdkFacebook:
-    :path: "../"
+    :path: IdentitySdkFacebook.podspec
 
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
@@ -52,8 +51,8 @@ SPEC CHECKSUMS:
   FBSDKCoreKit_Basics: d35c775aaf243a2d731dfae7be3a74b1987285ab
   FBSDKLoginKit: f8ca5f7ab7c4e5b93e729d94975b0db7fcc511ed
   IdentitySdkCore: e74e8f81ce688fac4365183376e3b26f62f06b5f
-  IdentitySdkFacebook: d23f478e93658175c9f7c0f82d2501f0caf77756
+  IdentitySdkFacebook: 634ba56127c8c5f51c93b186c04415871cc3bd97
 
-PODFILE CHECKSUM: ea3abfa27d2faccd30f035d9775acb6ed83dfe68
+PODFILE CHECKSUM: 9f63c0a241969d98b6f688a508fd68766a56fe58
 
 COCOAPODS: 1.15.2
