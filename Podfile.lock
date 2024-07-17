@@ -16,7 +16,7 @@ PODS:
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.8)
     - DeviceKit (~> 5.1)
-  - IdentitySdkFacebook (6.3.0):
+  - IdentitySdkFacebook (6.4.0):
     - FBSDKCoreKit (~> 17.0.0)
     - FBSDKLoginKit (~> 17.0.0)
     - IdentitySdkCore
@@ -51,7 +51,7 @@ SPEC CHECKSUMS:
   FBSDKCoreKit_Basics: d35c775aaf243a2d731dfae7be3a74b1987285ab
   FBSDKLoginKit: f8ca5f7ab7c4e5b93e729d94975b0db7fcc511ed
   IdentitySdkCore: e74e8f81ce688fac4365183376e3b26f62f06b5f
-  IdentitySdkFacebook: fc86014f2f8ec3c8edfc7bf1d11cf52266c47171
+  IdentitySdkFacebook: 4aa478b9e155a42aeca9dcf5ae1de3a0c605498d
 
 PODFILE CHECKSUM: 9f63c0a241969d98b6f688a508fd68766a56fe58
 
