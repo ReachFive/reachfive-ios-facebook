@@ -1,11 +1,11 @@
 require_relative 'version'
 
 Pod::Spec.new do |spec|
-  spec.name                  = "IdentitySdkFacebook"
+  spec.name                  = "Reach5Facebook"
   spec.version               = $VERSION
-  spec.summary               = "ReachFive IdentitySdkFacebook"
+  spec.summary               = "Reachfive Identity SDK for Facebook Login"
   spec.description           = <<-DESC
-      ReachFive Identity Sdk Facebook
+      Reachfive Identity SDK for iOS integrating with Facebook Login
   DESC
   spec.homepage              = "https://github.com/ReachFive/reachfive-ios-facebook"
   spec.license               = { :type => "MIT", :file => "LICENSE" }
@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
   spec.platform              = :ios
   spec.ios.deployment_target = $IOS_DEPLOYMENT_TARGET
 
-  spec.dependency 'IdentitySdkCore'
+  spec.dependency 'Reach5'
   spec.dependency 'FBSDKCoreKit', '~> 17.0.0'
   spec.dependency 'FBSDKLoginKit', '~> 17.0.0'
 end

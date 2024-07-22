@@ -15,10 +15,10 @@ jobs:
           name: Install CocoaPods
           command: gem install cocoapods --user-install
       - run:
-          name: Check IdentitySdkFacebook
+          name: Check Reach5Facebook
           command: |
             pod install
-            pod lib lint IdentitySdkFacebook.podspec
+            pod lib lint Reach5Facebook.podspec
   build-for-release:
     macos:
       xcode: "15.3.0"
@@ -28,10 +28,10 @@ jobs:
           name: Install CocoaPods
           command: gem install cocoapods --user-install
       - run:
-          name: Check IdentitySdkFacebook
+          name: Check Reach5Facebook
           command: |
             pod install
-            pod spec lint IdentitySdkFacebook.podspec
+            pod spec lint Reach5Facebook.podspec
 
   publish:
     macos:
@@ -41,7 +41,7 @@ jobs:
       - run:
           name: Install CocoaPods
           command: gem install cocoapods --user-install
-      - run: pod trunk push IdentitySdkFacebook.podspec
+      - run: pod trunk push Reach5Facebook.podspec
 
 default_workflows_filters: &default_workflows_filters
   filters:
