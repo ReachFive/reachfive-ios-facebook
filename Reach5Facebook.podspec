@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
   spec.platform              = :ios
   spec.ios.deployment_target = $IOS_DEPLOYMENT_TARGET
   spec.resource_bundle = {
-    'Reach5' => ['IdentitySdkFacebook/PrivacyInfo.xcprivacy']
+    'Reach5Facebook' => ['IdentitySdkFacebook/PrivacyInfo.xcprivacy']
   }
 
   spec.dependency 'Reach5', '7.0.0.beta.2'
