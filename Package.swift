@@ -20,6 +20,10 @@ let package = Package(
                 .product(name: "FacebookCore", package: "facebook-ios-sdk"),
                 .product(name: "FacebookLogin", package: "facebook-ios-sdk"),
             ],
-            path: "IdentitySdkFacebook"),
+            path: "IdentitySdkFacebook",
+            resources: [
+              .copy("PrivacyInfo.xcprivacy")
+            ]
+        ),
     ]
 )
