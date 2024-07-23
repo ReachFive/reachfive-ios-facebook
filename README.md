@@ -39,6 +39,10 @@ dependencies: [
 ]
 ```
 
+## XCode
+
+Open the project folder to view it as a package project, not the .xcodeproj or .xcworkspace which makes them seen as a Pod project
+
 ## Usage
 Refer to the [public documentation](https://developer.reachfive.com/sdk-ios/index.html) to install the SDKs and to initialize your ReachFive client.
 
