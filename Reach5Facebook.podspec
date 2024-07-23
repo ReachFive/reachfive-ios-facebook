@@ -20,7 +20,7 @@ Pod::Spec.new do |spec|
     'Reach5' => ['IdentitySdkFacebook/PrivacyInfo.xcprivacy']
   }
 
-  spec.dependency 'Reach5'
+  spec.dependency 'Reach5', :git => 'https://github.com/ReachFive/reachfive-ios.git', :branch => '7.0.0'
   spec.dependency 'FBSDKCoreKit', '~> 17.0.0'
   spec.dependency 'FBSDKLoginKit', '~> 17.0.0'
 end
