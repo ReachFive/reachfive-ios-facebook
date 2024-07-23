@@ -16,6 +16,9 @@ Pod::Spec.new do |spec|
   spec.source_files          = "IdentitySdkFacebook/Classes/**/*.*"
   spec.platform              = :ios
   spec.ios.deployment_target = $IOS_DEPLOYMENT_TARGET
+  spec.resource_bundle = {
+    'Reach5' => ['IdentitySdkFacebook/PrivacyInfo.xcprivacy']
+  }
 
   spec.dependency 'Reach5'
   spec.dependency 'FBSDKCoreKit', '~> 17.0.0'

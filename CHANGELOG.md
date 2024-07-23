@@ -15,11 +15,9 @@ import Reach5Facebook
 
 ### New features
 - Support for Swift Package Manager
-
-## v6.2.0
-### New features
 - Add privacy manifest.
 
+## v6.2.0
 ### Dependencies
 - Updated Facebook from 16.2 to 17.0
 
