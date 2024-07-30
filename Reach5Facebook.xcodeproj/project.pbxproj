@@ -115,7 +115,7 @@
 			packageProductDependencies = (
 				2AB329362C3F404A0058D464 /* Reach5 */,
 			);
-			productName = IdentitySdkFacebook;
+			productName = Reach5Facebook;
 			productReference = 34DD7DC1229C222D007311FE /* Reach5Facebook.framework */;
 			productType = "com.apple.product-type.framework";
 		};
@@ -338,7 +338,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = IdentitySdkFacebook/Info.plist;
+				INFOPLIST_FILE = Reach5Facebook/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -368,7 +368,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = IdentitySdkFacebook/Info.plist;
+				INFOPLIST_FILE = Reach5Facebook/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
