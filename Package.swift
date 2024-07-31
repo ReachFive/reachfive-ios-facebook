@@ -21,7 +21,6 @@ let package = Package(
                 .product(name: "FacebookCore", package: "facebook-ios-sdk"),
                 .product(name: "FacebookLogin", package: "facebook-ios-sdk"),
             ],
-            path: "Reach5Facebook",
             resources: [
               .copy("PrivacyInfo.xcprivacy")
             ]

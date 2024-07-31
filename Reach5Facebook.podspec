@@ -13,11 +13,11 @@ Pod::Spec.new do |spec|
   spec.authors               = { "François" => "francois.devemy@reach5.co", "Pierre" => "pierre.bar@reach5.co" }
   spec.swift_versions        = ["5"]
   spec.source                = { :git => "https://github.com/ReachFive/reachfive-ios-facebook.git", :tag => "#{spec.version}" }
-  spec.source_files          = "Reach5Facebook/Classes/**/*.*"
+  spec.source_files          = "Sources/Classes/**/*.*"
   spec.platform              = :ios
   spec.ios.deployment_target = $IOS_DEPLOYMENT_TARGET
   spec.resource_bundle = {
-    'Reach5Facebook' => ['Reach5Facebook/PrivacyInfo.xcprivacy']
+    'Reach5Facebook' => ['Sources/PrivacyInfo.xcprivacy']
   }
 
   spec.dependency 'Reach5'
