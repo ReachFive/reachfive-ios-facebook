@@ -66,10 +66,10 @@
 		34DD7DC3229C222D007311FE /* Reach5Facebook */ = {
 			isa = PBXGroup;
 			children = (
-				2A3EC1292C59B85E00492A26 /* Classes */,
 				34DD7DC4229C222D007311FE /* Reach5Facebook.h */,
 				34DD7DC5229C222D007311FE /* Info.plist */,
 				2AB8491C2BB338DC00F84026 /* PrivacyInfo.xcprivacy */,
+				2A3EC1292C59B85E00492A26 /* Classes */,
 			);
 			path = Reach5Facebook;
 			sourceTree = "<group>";
