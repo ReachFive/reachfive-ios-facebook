@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A3EC12B2C59B8A900492A26 /* FacebookProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3EC12A2C59B8A900492A26 /* FacebookProvider.swift */; };
 		2AB329372C3F404A0058D464 /* Reach5 in Frameworks */ = {isa = PBXBuildFile; productRef = 2AB329362C3F404A0058D464 /* Reach5 */; };
-		3417321A229D9FE000681CFD /* Classes in Resources */ = {isa = PBXBuildFile; fileRef = 34173219229D9FE000681CFD /* Classes */; };
 		34DD7DC6229C222D007311FE /* Reach5Facebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 34DD7DC4229C222D007311FE /* Reach5Facebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD5CD4A1D3E426DAFC904BA9 /* Pods_Reach5Facebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7459838BA92C677F2FA750B9 /* Pods_Reach5Facebook.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A3EC12A2C59B8A900492A26 /* FacebookProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookProvider.swift; sourceTree = "<group>"; };
 		2AB8491C2BB338DC00F84026 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		34173219229D9FE000681CFD /* Classes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Classes; sourceTree = "<group>"; };
 		34DD7DC1229C222D007311FE /* Reach5Facebook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Reach5Facebook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		34DD7DC4229C222D007311FE /* Reach5Facebook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reach5Facebook.h; sourceTree = "<group>"; };
 		34DD7DC5229C222D007311FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -37,6 +37,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A3EC1292C59B85E00492A26 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2A3EC12A2C59B8A900492A26 /* FacebookProvider.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		34DD7DB7229C222D007311FE = {
 			isa = PBXGroup;
 			children = (
@@ -58,7 +66,7 @@
 		34DD7DC3229C222D007311FE /* Reach5Facebook */ = {
 			isa = PBXGroup;
 			children = (
-				34173219229D9FE000681CFD /* Classes */,
+				2A3EC1292C59B85E00492A26 /* Classes */,
 				34DD7DC4229C222D007311FE /* Reach5Facebook.h */,
 				34DD7DC5229C222D007311FE /* Info.plist */,
 				2AB8491C2BB338DC00F84026 /* PrivacyInfo.xcprivacy */,
@@ -130,7 +138,7 @@
 				TargetAttributes = {
 					34DD7DC0229C222D007311FE = {
 						CreatedOnToolsVersion = 10.2.1;
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1540;
 					};
 				};
 			};
@@ -160,7 +168,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3417321A229D9FE000681CFD /* Classes in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,6 +203,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A3EC12B2C59B8A900492A26 /* FacebookProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
