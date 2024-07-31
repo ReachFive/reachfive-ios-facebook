@@ -3,12 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2A3EC12B2C59B8A900492A26 /* FacebookProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3EC12A2C59B8A900492A26 /* FacebookProvider.swift */; };
-		2AB329372C3F404A0058D464 /* Reach5 in Frameworks */ = {isa = PBXBuildFile; productRef = 2AB329362C3F404A0058D464 /* Reach5 */; };
 		34DD7DC6229C222D007311FE /* Reach5Facebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 34DD7DC4229C222D007311FE /* Reach5Facebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD5CD4A1D3E426DAFC904BA9 /* Pods_Reach5Facebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7459838BA92C677F2FA750B9 /* Pods_Reach5Facebook.framework */; };
 /* End PBXBuildFile section */
@@ -29,7 +28,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AB329372C3F404A0058D464 /* Reach5 in Frameworks */,
 				AD5CD4A1D3E426DAFC904BA9 /* Pods_Reach5Facebook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,7 +119,6 @@
 			);
 			name = Reach5Facebook;
 			packageProductDependencies = (
-				2AB329362C3F404A0058D464 /* Reach5 */,
 			);
 			productName = Reach5Facebook;
 			productReference = 34DD7DC1229C222D007311FE /* Reach5Facebook.framework */;
@@ -152,7 +149,6 @@
 			);
 			mainGroup = 34DD7DB7229C222D007311FE;
 			packageReferences = (
-				2AB329352C3F404A0058D464 /* XCRemoteSwiftPackageReference "reachfive-ios" */,
 			);
 			productRefGroup = 34DD7DC2229C222D007311FE /* Products */;
 			projectDirPath = "";
@@ -415,25 +411,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		2AB329352C3F404A0058D464 /* XCRemoteSwiftPackageReference "reachfive-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReachFive/reachfive-ios.git";
-			requirement = {
-				branch = 7.0.0;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		2AB329362C3F404A0058D464 /* Reach5 */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2AB329352C3F404A0058D464 /* XCRemoteSwiftPackageReference "reachfive-ios" */;
-			productName = Reach5;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 34DD7DB8229C222D007311FE /* Project object */;
 }
