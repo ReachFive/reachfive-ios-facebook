@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "34DD7DC0229C222D007311FE"
-               BuildableName = "IdentitySdkFacebook.framework"
-               BlueprintName = "IdentitySdkFacebook"
-               ReferencedContainer = "container:IdentitySdkFacebook.xcodeproj">
+               BuildableName = "Reach5Facebook.framework"
+               BlueprintName = "Reach5Facebook"
+               ReferencedContainer = "container:Reach5Facebook.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -51,9 +51,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "34DD7DC0229C222D007311FE"
-            BuildableName = "IdentitySdkFacebook.framework"
-            BlueprintName = "IdentitySdkFacebook"
-            ReferencedContainer = "container:IdentitySdkFacebook.xcodeproj">
+            BuildableName = "Reach5Facebook.framework"
+            BlueprintName = "Reach5Facebook"
+            ReferencedContainer = "container:Reach5Facebook.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

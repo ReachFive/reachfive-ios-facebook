@@ -22,7 +22,7 @@ PODS:
     - Reach5
 
 DEPENDENCIES:
-  - Reach5 (from `../reachfive-ios/Reach5.podspec`)
+  - Reach5 (from `https://github.com/ReachFive/reachfive-ios.git`, branch `7.0.0`)
   - Reach5Facebook (from `Reach5Facebook.podspec`)
 
 SPEC REPOS:
@@ -38,9 +38,15 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   Reach5:
-    :path: "../reachfive-ios/Reach5.podspec"
+    :branch: 7.0.0
+    :git: https://github.com/ReachFive/reachfive-ios.git
   Reach5Facebook:
     :path: Reach5Facebook.podspec
+
+CHECKOUT OPTIONS:
+  Reach5:
+    :commit: 7425908308a97c55ac0f2a2f4f0018cc9025f205
+    :git: https://github.com/ReachFive/reachfive-ios.git
 
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
@@ -51,9 +57,9 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: a5f384db2e9ee84e98494fed8f983d2bd79accff
   FBSDKCoreKit_Basics: d35c775aaf243a2d731dfae7be3a74b1987285ab
   FBSDKLoginKit: f8ca5f7ab7c4e5b93e729d94975b0db7fcc511ed
-  Reach5: ee351a9999eb418d2a31c0b26b72a9e3b7746b39
-  Reach5Facebook: bad11a02729105aefc68f6db23348b6fd8465a23
+  Reach5: fc5fc1f69b9d5f03fa581bf13dee46fdde2e2815
+  Reach5Facebook: b8e92bc1338a148f7753dc949cc5d0a4be49df45
 
-PODFILE CHECKSUM: b27ab82e7fbd33410b00251493dba7e7353c2c11
+PODFILE CHECKSUM: 3c5b3c4246bf08d1203555757badda532e9484e8
 
 COCOAPODS: 1.15.2
