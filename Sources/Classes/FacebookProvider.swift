@@ -1,20 +1,16 @@
 import Foundation
 import UIKit
-#if canImport(Reach5)
 import Reach5
-#else
-import IdentitySdkCore
-#endif
 import BrightFutures
 import FBSDKLoginKit
 
 public class FacebookProvider: ProviderCreator {
     public static var NAME: String = "facebook"
-    
+
     public var name: String = NAME
-    
+
     public init() {}
-    
+
     public func create(
         sdkConfig: SdkConfig,
         providerConfig: ProviderConfig,
@@ -32,12 +28,12 @@ public class FacebookProvider: ProviderCreator {
 
 public class ConfiguredFacebookProvider: NSObject, Provider {
     public var name: String = FacebookProvider.NAME
-    
+
     var sdkConfig: SdkConfig
     var providerConfig: ProviderConfig
     var reachFiveApi: ReachFiveApi
     var clientConfigResponse: ClientConfigResponse
-    
+
     public init(
         sdkConfig: SdkConfig,
         providerConfig: ProviderConfig,
@@ -49,11 +45,11 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         self.reachFiveApi = reachFiveApi
         self.clientConfigResponse = clientConfigResponse
     }
-    
+
     public override var description: String {
         "Provider: \(name)"
     }
-    
+
     public func login(
         scope: [String]?,
         origin: String,
@@ -66,7 +62,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
                 .loginWithProvider(loginProviderRequest: loginProviderRequest)
                 .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
         }
-        
+
         let promise = Promise<AuthToken, ReachFiveError>()
         LoginManager().logIn(permissions: providerConfig.scope ?? ["email", "public_profile"], from: viewController) { (result, error) in
             guard let result else {
@@ -83,10 +79,10 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
                     .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) }))
             }
         }
-        
+
         return promise.future
     }
-    
+
     private func createLoginRequest(token: AccessToken?, origin: String, scope: [String]?) -> LoginProviderRequest {
         LoginProviderRequest(
             provider: providerConfig.provider,
@@ -98,19 +94,19 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
             scope: scope?.joined(separator: " ") ?? self.clientConfigResponse.scope
         )
     }
-    
+
     public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         FBSDKCoreKit.ApplicationDelegate.shared.application(app, open: url, options: options)
     }
-    
+
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FBSDKCoreKit.ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
-    
+
     public func applicationDidBecomeActive(_ application: UIApplication) {
         AppEvents.shared.activateApp()
     }
-   
+
     public func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         true
     }

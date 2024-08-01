@@ -3,25 +3,24 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		14F33E0EA96F2CA5351DC8D2 /* Pods_IdentitySdkFacebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57949F2A0ADABEC4B80C53C8 /* Pods_IdentitySdkFacebook.framework */; };
-		2AB329372C3F404A0058D464 /* Reach5 in Frameworks */ = {isa = PBXBuildFile; productRef = 2AB329362C3F404A0058D464 /* Reach5 */; };
-		3417321A229D9FE000681CFD /* Classes in Resources */ = {isa = PBXBuildFile; fileRef = 34173219229D9FE000681CFD /* Classes */; };
-		34DD7DC6229C222D007311FE /* IdentitySdkFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 34DD7DC4229C222D007311FE /* IdentitySdkFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A3EC12B2C59B8A900492A26 /* FacebookProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3EC12A2C59B8A900492A26 /* FacebookProvider.swift */; };
+		34DD7DC6229C222D007311FE /* Reach5Facebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 34DD7DC4229C222D007311FE /* Reach5Facebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AD5CD4A1D3E426DAFC904BA9 /* Pods_Reach5Facebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7459838BA92C677F2FA750B9 /* Pods_Reach5Facebook.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A3EC12A2C59B8A900492A26 /* FacebookProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookProvider.swift; sourceTree = "<group>"; };
 		2AB8491C2BB338DC00F84026 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		34173219229D9FE000681CFD /* Classes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Classes; sourceTree = "<group>"; };
-		34DD7DC1229C222D007311FE /* IdentitySdkFacebook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IdentitySdkFacebook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		34DD7DC4229C222D007311FE /* IdentitySdkFacebook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentitySdkFacebook.h; sourceTree = "<group>"; };
+		34DD7DC1229C222D007311FE /* Reach5Facebook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Reach5Facebook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		34DD7DC4229C222D007311FE /* Reach5Facebook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reach5Facebook.h; sourceTree = "<group>"; };
 		34DD7DC5229C222D007311FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		57949F2A0ADABEC4B80C53C8 /* Pods_IdentitySdkFacebook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IdentitySdkFacebook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C91A33F1EC32479081AE3526 /* Pods-IdentitySdkFacebook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdentitySdkFacebook.release.xcconfig"; path = "Target Support Files/Pods-IdentitySdkFacebook/Pods-IdentitySdkFacebook.release.xcconfig"; sourceTree = "<group>"; };
-		FDD7057EC2980CC379122E2B /* Pods-IdentitySdkFacebook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdentitySdkFacebook.debug.xcconfig"; path = "Target Support Files/Pods-IdentitySdkFacebook/Pods-IdentitySdkFacebook.debug.xcconfig"; sourceTree = "<group>"; };
+		6A26378E941EB2BC851DE41F /* Pods-Reach5Facebook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Reach5Facebook.release.xcconfig"; path = "Target Support Files/Pods-Reach5Facebook/Pods-Reach5Facebook.release.xcconfig"; sourceTree = "<group>"; };
+		7459838BA92C677F2FA750B9 /* Pods_Reach5Facebook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Reach5Facebook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		81D3DCDB38C0E59AF2046F88 /* Pods-Reach5Facebook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Reach5Facebook.debug.xcconfig"; path = "Target Support Files/Pods-Reach5Facebook/Pods-Reach5Facebook.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,18 +28,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AB329372C3F404A0058D464 /* Reach5 in Frameworks */,
-				14F33E0EA96F2CA5351DC8D2 /* Pods_IdentitySdkFacebook.framework in Frameworks */,
+				AD5CD4A1D3E426DAFC904BA9 /* Pods_Reach5Facebook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A3EC1292C59B85E00492A26 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2A3EC12A2C59B8A900492A26 /* FacebookProvider.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		34DD7DB7229C222D007311FE = {
 			isa = PBXGroup;
 			children = (
-				34DD7DC3229C222D007311FE /* IdentitySdkFacebook */,
+				34DD7DC3229C222D007311FE /* Sources */,
 				34DD7DC2229C222D007311FE /* Products */,
 				920DCE1D92D2064208FC8E4B /* Pods */,
 				65D8F5B89A94FC74BBD88F3B /* Frameworks */,
@@ -50,26 +56,26 @@
 		34DD7DC2229C222D007311FE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				34DD7DC1229C222D007311FE /* IdentitySdkFacebook.framework */,
+				34DD7DC1229C222D007311FE /* Reach5Facebook.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		34DD7DC3229C222D007311FE /* IdentitySdkFacebook */ = {
+		34DD7DC3229C222D007311FE /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				34173219229D9FE000681CFD /* Classes */,
-				34DD7DC4229C222D007311FE /* IdentitySdkFacebook.h */,
+				34DD7DC4229C222D007311FE /* Reach5Facebook.h */,
 				34DD7DC5229C222D007311FE /* Info.plist */,
 				2AB8491C2BB338DC00F84026 /* PrivacyInfo.xcprivacy */,
+				2A3EC1292C59B85E00492A26 /* Classes */,
 			);
-			path = IdentitySdkFacebook;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		65D8F5B89A94FC74BBD88F3B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				57949F2A0ADABEC4B80C53C8 /* Pods_IdentitySdkFacebook.framework */,
+				7459838BA92C677F2FA750B9 /* Pods_Reach5Facebook.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -77,8 +83,8 @@
 		920DCE1D92D2064208FC8E4B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FDD7057EC2980CC379122E2B /* Pods-IdentitySdkFacebook.debug.xcconfig */,
-				C91A33F1EC32479081AE3526 /* Pods-IdentitySdkFacebook.release.xcconfig */,
+				81D3DCDB38C0E59AF2046F88 /* Pods-Reach5Facebook.debug.xcconfig */,
+				6A26378E941EB2BC851DE41F /* Pods-Reach5Facebook.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -90,16 +96,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34DD7DC6229C222D007311FE /* IdentitySdkFacebook.h in Headers */,
+				34DD7DC6229C222D007311FE /* Reach5Facebook.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		34DD7DC0229C222D007311FE /* IdentitySdkFacebook */ = {
+		34DD7DC0229C222D007311FE /* Reach5Facebook */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 34DD7DC9229C222D007311FE /* Build configuration list for PBXNativeTarget "IdentitySdkFacebook" */;
+			buildConfigurationList = 34DD7DC9229C222D007311FE /* Build configuration list for PBXNativeTarget "Reach5Facebook" */;
 			buildPhases = (
 				1AFFF5C9B5EC0241865A5952 /* [CP] Check Pods Manifest.lock */,
 				34DD7DBC229C222D007311FE /* Headers */,
@@ -111,12 +117,11 @@
 			);
 			dependencies = (
 			);
-			name = IdentitySdkFacebook;
+			name = Reach5Facebook;
 			packageProductDependencies = (
-				2AB329362C3F404A0058D464 /* Reach5 */,
 			);
-			productName = IdentitySdkFacebook;
-			productReference = 34DD7DC1229C222D007311FE /* IdentitySdkFacebook.framework */;
+			productName = Reach5Facebook;
+			productReference = 34DD7DC1229C222D007311FE /* Reach5Facebook.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -130,11 +135,11 @@
 				TargetAttributes = {
 					34DD7DC0229C222D007311FE = {
 						CreatedOnToolsVersion = 10.2.1;
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1540;
 					};
 				};
 			};
-			buildConfigurationList = 34DD7DBB229C222D007311FE /* Build configuration list for PBXProject "IdentitySdkFacebook" */;
+			buildConfigurationList = 34DD7DBB229C222D007311FE /* Build configuration list for PBXProject "Reach5Facebook" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -144,13 +149,12 @@
 			);
 			mainGroup = 34DD7DB7229C222D007311FE;
 			packageReferences = (
-				2AB329352C3F404A0058D464 /* XCRemoteSwiftPackageReference "reachfive-ios" */,
 			);
 			productRefGroup = 34DD7DC2229C222D007311FE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				34DD7DC0229C222D007311FE /* IdentitySdkFacebook */,
+				34DD7DC0229C222D007311FE /* Reach5Facebook */,
 			);
 		};
 /* End PBXProject section */
@@ -160,7 +164,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3417321A229D9FE000681CFD /* Classes in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,7 +185,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-IdentitySdkFacebook-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Reach5Facebook-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -196,6 +199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A3EC12B2C59B8A900492A26 /* FacebookProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,7 +332,7 @@
 		};
 		34DD7DCA229C222D007311FE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FDD7057EC2980CC379122E2B /* Pods-IdentitySdkFacebook.debug.xcconfig */;
+			baseConfigurationReference = 81D3DCDB38C0E59AF2046F88 /* Pods-Reach5Facebook.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -338,7 +342,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = IdentitySdkFacebook/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -346,7 +350,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.reach5.IdentitySdkFacebook;
+				PRODUCT_BUNDLE_IDENTIFIER = com.reach5.Reach5Facebook;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -358,7 +362,7 @@
 		};
 		34DD7DCB229C222D007311FE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C91A33F1EC32479081AE3526 /* Pods-IdentitySdkFacebook.release.xcconfig */;
+			baseConfigurationReference = 6A26378E941EB2BC851DE41F /* Pods-Reach5Facebook.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -368,7 +372,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = IdentitySdkFacebook/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -376,7 +380,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.reach5.IdentitySdkFacebook;
+				PRODUCT_BUNDLE_IDENTIFIER = com.reach5.Reach5Facebook;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -388,7 +392,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		34DD7DBB229C222D007311FE /* Build configuration list for PBXProject "IdentitySdkFacebook" */ = {
+		34DD7DBB229C222D007311FE /* Build configuration list for PBXProject "Reach5Facebook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				34DD7DC7229C222D007311FE /* Debug */,
@@ -397,7 +401,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		34DD7DC9229C222D007311FE /* Build configuration list for PBXNativeTarget "IdentitySdkFacebook" */ = {
+		34DD7DC9229C222D007311FE /* Build configuration list for PBXNativeTarget "Reach5Facebook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				34DD7DCA229C222D007311FE /* Debug */,
@@ -407,25 +411,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		2AB329352C3F404A0058D464 /* XCRemoteSwiftPackageReference "reachfive-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReachFive/reachfive-ios.git";
-			requirement = {
-				branch = "feature/CA-1916_swift_package_manager";
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		2AB329362C3F404A0058D464 /* Reach5 */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2AB329352C3F404A0058D464 /* XCRemoteSwiftPackageReference "reachfive-ios" */;
-			productName = Reach5;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 34DD7DB8229C222D007311FE /* Project object */;
 }

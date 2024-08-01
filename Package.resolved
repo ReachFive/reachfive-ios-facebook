@@ -1,5 +1,5 @@
 {
-  "originHash" : "7469e518fde3c43de02b3be48eb187ef2483c67b05cd081b325bd9bf2020ce6c",
+  "originHash" : "d80a4ebab31c8fec368edc5449484e1bfc3bb0c1539fb143fd34c205b60de3ec",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -38,12 +38,21 @@
       }
     },
     {
+      "identity" : "facebook-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/facebook/facebook-ios-sdk.git",
+      "state" : {
+        "revision" : "9ed465ccd73c231144d49a9c681774577c616f34",
+        "version" : "17.0.2"
+      }
+    },
+    {
       "identity" : "reachfive-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ReachFive/reachfive-ios.git",
       "state" : {
-        "branch" : "feature/CA-1916_swift_package_manager",
-        "revision" : "f37618a2d28e1a50544769fddcda5329a3d6ecb8"
+        "revision" : "106a5f40f178489e4ef722aac5a66bf91ece1c32",
+        "version" : "7.0.0"
       }
     }
   ],

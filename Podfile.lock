@@ -11,19 +11,19 @@ PODS:
   - FBSDKCoreKit_Basics (17.0.2)
   - FBSDKLoginKit (17.0.2):
     - FBSDKCoreKit (= 17.0.2)
-  - IdentitySdkCore (6.3.0):
+  - Reach5 (7.0.0):
     - Alamofire (~> 5.8)
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.8)
     - DeviceKit (~> 5.1)
-  - IdentitySdkFacebook (6.4.0):
+  - Reach5Facebook (7.0.0):
     - FBSDKCoreKit (~> 17.0.0)
     - FBSDKLoginKit (~> 17.0.0)
-    - IdentitySdkCore
+    - Reach5
 
 DEPENDENCIES:
-  - IdentitySdkCore
-  - IdentitySdkFacebook (from `IdentitySdkFacebook.podspec`)
+  - Reach5
+  - Reach5Facebook (from `Reach5Facebook.podspec`)
 
 SPEC REPOS:
   trunk:
@@ -35,11 +35,11 @@ SPEC REPOS:
     - FBSDKCoreKit
     - FBSDKCoreKit_Basics
     - FBSDKLoginKit
-    - IdentitySdkCore
+    - Reach5
 
 EXTERNAL SOURCES:
-  IdentitySdkFacebook:
-    :path: IdentitySdkFacebook.podspec
+  Reach5Facebook:
+    :path: Reach5Facebook.podspec
 
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
@@ -50,9 +50,9 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: a5f384db2e9ee84e98494fed8f983d2bd79accff
   FBSDKCoreKit_Basics: d35c775aaf243a2d731dfae7be3a74b1987285ab
   FBSDKLoginKit: f8ca5f7ab7c4e5b93e729d94975b0db7fcc511ed
-  IdentitySdkCore: e74e8f81ce688fac4365183376e3b26f62f06b5f
-  IdentitySdkFacebook: 4aa478b9e155a42aeca9dcf5ae1de3a0c605498d
+  Reach5: d5f162142895fe7120e1c0dd5a3ae0f7494fd58b
+  Reach5Facebook: b8e92bc1338a148f7753dc949cc5d0a4be49df45
 
-PODFILE CHECKSUM: 9f63c0a241969d98b6f688a508fd68766a56fe58
+PODFILE CHECKSUM: c55f34f772cd9f7d170cd4e1bb419ca4b3d37d2c
 
 COCOAPODS: 1.15.2
