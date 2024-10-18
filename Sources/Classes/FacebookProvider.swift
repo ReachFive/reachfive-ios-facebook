@@ -53,50 +53,119 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         "Provider: \(name)"
     }
 
+    //TODO faire l'ancienne méthode si on a les droits de tracking
     public func login(
         scope: [String]?,
         origin: String,
         viewController: UIViewController?
     ) -> Future<AuthToken, ReachFiveError> {
-        if let token = FBSDKCoreKit.AccessToken.current, !token.isExpired {
-            // User is already logged in.
-            let loginProviderRequest = createLoginRequest(token: token, origin: origin, scope: scope)
-            return reachFiveApi
-                .loginWithProvider(loginProviderRequest: loginProviderRequest)
-                .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
-        }
+        print("AuthenticationToken.current == nil \(AuthenticationToken.current == nil)")
+        print("tokenString \(AuthenticationToken.current?.tokenString)")
+//        guard let exp = AuthenticationToken.current?.claims()?.exp else {
+//            print("no exp")
+//            print("claims \(AuthenticationToken.current?.claims())")
+//            return doLogin(scope: scope, origin: origin, viewController: viewController)
+//        }
+//        print("exp \(exp)")
+
+        //TODO parser le AuthenticationToken.current?.tokenString et en extraire l'exp
+        // voir si le jeton est expiré.
+        // si non, l'utiliser pour l'échange
+        // si oui, faire logout
+        let now = Date()
+        // exp correspond à ça :
+        print("now.timeIntervalSince1970 \(now.timeIntervalSince1970)")
+
+//        LoginManager().logOut()
+        print("AuthenticationToken.current == nil \(AuthenticationToken.current == nil)")
+
+//        if let authenticationTokenString = AuthenticationToken.current?.tokenString {
+//            print("short cut")
+////            let authenticationTokenString = AuthenticationToken.current?.tokenString
+//            print("AuthenticationToken: \(authenticationTokenString)")
+//            // User is already logged in.
+//            let loginProviderRequest = createLoginRequest(token: authenticationTokenString, origin: origin, scope: scope)
+//            return reachFiveApi
+//                .loginWithProvider(loginProviderRequest: loginProviderRequest)
+//                .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
+//                .recoverWith { _ in
+//                    print("recover")
+//                    return self.doLogin(scope: scope, origin: origin, viewController: viewController)
+//                }
+//        }
+
+        return doLogin(scope: scope, origin: origin, viewController: viewController)
+    }
+
+    private func doLogin(
+        scope: [String]?,
+        origin: String,
+        viewController: UIViewController?
+    ) -> Future<AuthToken, ReachFiveError> {
+        print("AuthenticationToken.current == nil \(AuthenticationToken.current == nil)")
 
         let promise = Promise<AuthToken, ReachFiveError>()
-        LoginManager().logIn(permissions: providerConfig.scope ?? ["email", "public_profile"], from: viewController) { (result, error) in
-            guard let result else {
-                let reason = error?.localizedDescription ?? "No user"
-                promise.failure(.TechnicalError(reason: reason))
-                return
-            }
-            if result.isCancelled {
+        print("providerConfig.scope \(providerConfig.scope)")
+
+        //TODO sortir le générateur aléatoire dans une classe à part
+        let nonce = Pkce.generate().codeVerifier
+        print("nonce \(nonce)")
+
+        guard let configuration: LoginConfiguration = LoginConfiguration(
+            permissions: providerConfig.scope ?? ["email", "public_profile"],
+            tracking: .enabled,
+            nonce: nonce
+        )
+        else {
+            return promise.future
+        }
+        print("configuration.tracking \(configuration.tracking)")
+
+        LoginManager().logIn(configuration: configuration) { (res: LoginResult) in
+            switch res {
+            case let .failed(error):
+                promise.failure(.TechnicalError(reason: error.localizedDescription))
+                break
+            case .cancelled:
                 promise.failure(.AuthCanceled)
-            } else {
-                let loginProviderRequest = self.createLoginRequest(token: result.token, origin: origin, scope: scope)
-                promise.completeWith(self.reachFiveApi
-                    .loginWithProvider(loginProviderRequest: loginProviderRequest)
-                    .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) }))
+                break
+            case .success:
+
+                let authenticationTokenString = AuthenticationToken.current?.tokenString
+
+                let pkce: Pkce = Pkce.generate()
+                //TODO factoriser ça (avec celui pour Apple et celui du web)
+                let params: [String: String?] = [
+                    "provider": "facebook",
+                    "client_id": self.sdkConfig.clientId,
+                    "id_token": authenticationTokenString,
+                    "response_type": "code",
+                    "redirect_uri": self.sdkConfig.scheme,
+                    "scope": (scope ?? []).joined(separator: " "),
+                    "code_challenge": pkce.codeChallenge,
+                    "code_challenge_method": pkce.codeChallengeMethod,
+                    "nonce": nonce,
+                    "origin": origin,
+                ]
+                promise.completeWith(self.reachFiveApi.authorize(params: params).flatMap({ self.authWithCode(code: $0, pkce: pkce) }))
             }
         }
 
         return promise.future
     }
 
-    private func createLoginRequest(token: AccessToken?, origin: String, scope: [String]?) -> LoginProviderRequest {
-        LoginProviderRequest(
-            provider: providerConfig.provider,
-            providerToken: token?.tokenString,
-            code: nil,
-            origin: origin,
+    func authWithCode(code: String, pkce: Pkce) -> Future<AuthToken, ReachFiveError> {
+        let authCodeRequest = AuthCodeRequest(
             clientId: sdkConfig.clientId,
-            responseType: "token",
-            scope: scope?.joined(separator: " ") ?? self.clientConfigResponse.scope
+            code: code,
+            redirectUri: sdkConfig.scheme,
+            pkce: pkce
         )
+        return reachFiveApi
+            .authWithCode(authCodeRequest: authCodeRequest)
+            .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
     }
+
 
     public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         FBSDKCoreKit.ApplicationDelegate.shared.application(app, open: url, options: options)
