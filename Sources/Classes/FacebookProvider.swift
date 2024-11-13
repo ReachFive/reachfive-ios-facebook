@@ -3,6 +3,7 @@ import UIKit
 import Reach5
 import BrightFutures
 import FBSDKLoginKit
+import AppTrackingTransparency
 
 public class FacebookProvider: ProviderCreator {
     public static var NAME: String = "facebook"
@@ -61,6 +62,11 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
     ) -> Future<AuthToken, ReachFiveError> {
         print("AuthenticationToken.current == nil \(AuthenticationToken.current == nil)")
         print("tokenString \(AuthenticationToken.current?.tokenString)")
+        if #available(macCatalyst 14, *) {
+            print(ATTrackingManager.trackingAuthorizationStatus)
+        } else {
+            // Fallback on earlier versions
+        }
 //        guard let exp = AuthenticationToken.current?.claims()?.exp else {
 //            print("no exp")
 //            print("claims \(AuthenticationToken.current?.claims())")
@@ -76,7 +82,6 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         // exp correspond à ça :
         print("now.timeIntervalSince1970 \(now.timeIntervalSince1970)")
 
-//        LoginManager().logOut()
         print("AuthenticationToken.current == nil \(AuthenticationToken.current == nil)")
 
 //        if let authenticationTokenString = AuthenticationToken.current?.tokenString {
@@ -107,14 +112,20 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         let promise = Promise<AuthToken, ReachFiveError>()
         print("providerConfig.scope \(providerConfig.scope)")
 
+        // Facebook semble incapable de donner le jeton correspondant à la dernière connexion.
+        // Que celui-ci soit encore frais ou expiré, tant qu'on ne fait pas un logout on obtient toujours le même lors de l'appel à AuthenticationToken.current.
+        // C'est non seulement très peu pratique si on devait parser le jeton pour en extraire l'exp,
+        // mais à cause du nonce, il faudrait pouvoir enregistrer ce dernier et le ressortir à chaque fois.
+        // C'est pourquoi on fait un logout à chaque fois.
+        LoginManager().logOut()
+
         //TODO sortir le générateur aléatoire dans une classe à part
-        let nonce = Pkce.generate().codeVerifier
-        print("nonce \(nonce)")
+        let nonce = Pkce.generate()
 
         guard let configuration: LoginConfiguration = LoginConfiguration(
             permissions: providerConfig.scope ?? ["email", "public_profile"],
             tracking: .enabled,
-            nonce: nonce
+            nonce: nonce.codeChallenge
         )
         else {
             return promise.future
@@ -129,8 +140,9 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
             case .cancelled:
                 promise.failure(.AuthCanceled)
                 break
-            case .success:
+            case let .success(_, _, token):
 
+                print("access token : \(token?.tokenString)")
                 let authenticationTokenString = AuthenticationToken.current?.tokenString
 
                 let pkce: Pkce = Pkce.generate()
@@ -144,7 +156,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
                     "scope": (scope ?? []).joined(separator: " "),
                     "code_challenge": pkce.codeChallenge,
                     "code_challenge_method": pkce.codeChallengeMethod,
-                    "nonce": nonce,
+                    "nonce": nonce.codeVerifier,
                     "origin": origin,
                 ]
                 promise.completeWith(self.reachFiveApi.authorize(params: params).flatMap({ self.authWithCode(code: $0, pkce: pkce) }))
