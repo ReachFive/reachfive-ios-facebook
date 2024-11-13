@@ -1,5 +1,10 @@
 # Changelog
 
+## v7.1.0
+### New features
+- Support choosing a variant
+
+
 ## v7.0.0
 ### Breaking changes
 - New name for the Pod: `Reach5Facebook`

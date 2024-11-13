@@ -1,22 +1,22 @@
 PODS:
-  - Alamofire (5.9.1)
+  - Alamofire (5.10.1)
   - BrightFutures (8.2.0)
-  - CryptoSwift (1.8.2)
-  - DeviceKit (5.4.0)
-  - FBAEMKit (17.0.2):
-    - FBSDKCoreKit_Basics (= 17.0.2)
-  - FBSDKCoreKit (17.0.2):
-    - FBAEMKit (= 17.0.2)
-    - FBSDKCoreKit_Basics (= 17.0.2)
-  - FBSDKCoreKit_Basics (17.0.2)
-  - FBSDKLoginKit (17.0.2):
-    - FBSDKCoreKit (= 17.0.2)
-  - Reach5 (7.0.0):
+  - CryptoSwift (1.8.3)
+  - DeviceKit (5.5.0)
+  - FBAEMKit (17.0.3):
+    - FBSDKCoreKit_Basics (= 17.0.3)
+  - FBSDKCoreKit (17.0.3):
+    - FBAEMKit (= 17.0.3)
+    - FBSDKCoreKit_Basics (= 17.0.3)
+  - FBSDKCoreKit_Basics (17.0.3)
+  - FBSDKLoginKit (17.0.3):
+    - FBSDKCoreKit (= 17.0.3)
+  - Reach5 (7.1.3):
     - Alamofire (~> 5.8)
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.8)
     - DeviceKit (~> 5.1)
-  - Reach5Facebook (7.0.0):
+  - Reach5Facebook (7.1.0):
     - FBSDKCoreKit (~> 17.0.0)
     - FBSDKLoginKit (~> 17.0.0)
     - Reach5
@@ -42,17 +42,17 @@ EXTERNAL SOURCES:
     :path: Reach5Facebook.podspec
 
 SPEC CHECKSUMS:
-  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  Alamofire: 840d2a1ad82355b536ec6ba5f97e5bfa54600ca3
   BrightFutures: 67e0e8cd974ab9f6c04650cc64153f7adf1ec489
-  CryptoSwift: c63a805d8bb5e5538e88af4e44bb537776af11ea
-  DeviceKit: bd34bb1766d926c3cc5a5f6e3e9a6dd10148b805
-  FBAEMKit: 619f96ea65427e8afca240d5b0f4703738dfdf5c
-  FBSDKCoreKit: a5f384db2e9ee84e98494fed8f983d2bd79accff
-  FBSDKCoreKit_Basics: d35c775aaf243a2d731dfae7be3a74b1987285ab
-  FBSDKLoginKit: f8ca5f7ab7c4e5b93e729d94975b0db7fcc511ed
-  Reach5: d5f162142895fe7120e1c0dd5a3ae0f7494fd58b
-  Reach5Facebook: b8e92bc1338a148f7753dc949cc5d0a4be49df45
+  CryptoSwift: 967f37cea5a3294d9cce358f78861652155be483
+  DeviceKit: d83e38ca196a4ebf0cc5f37d6f0316a24b794d5b
+  FBAEMKit: 9900b2edd99a2d21629a6277e6166f14c6215799
+  FBSDKCoreKit: 0791f8f68a8630931a4c12aa23a56cc021551596
+  FBSDKCoreKit_Basics: 46d6b472c0dd0a5a7e972c025033d1c567f54eb4
+  FBSDKLoginKit: b4a4eba1d62eb452544411824f41689adabd5bd2
+  Reach5: 0de298501e3f13d919bdf2c5729c99b689c52b52
+  Reach5Facebook: d25b39088b4408146b769e2e0d2601e43e041f9f
 
 PODFILE CHECKSUM: c55f34f772cd9f7d170cd4e1bb419ca4b3d37d2c
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
