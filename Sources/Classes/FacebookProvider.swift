@@ -60,57 +60,15 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         origin: String,
         viewController: UIViewController?
     ) -> Future<AuthToken, ReachFiveError> {
-        print("AuthenticationToken.current == nil \(AuthenticationToken.current == nil)")
-        print("tokenString \(AuthenticationToken.current?.tokenString)")
-        if #available(macCatalyst 14, *) {
-            print(ATTrackingManager.trackingAuthorizationStatus)
+        
+        let tracking: LoginTracking =
+        if #available(macCatalyst 14, *), ATTrackingManager.trackingAuthorizationStatus == ATTrackingManager.AuthorizationStatus.authorized {
+            .enabled
         } else {
-            // Fallback on earlier versions
+            .limited
         }
-//        guard let exp = AuthenticationToken.current?.claims()?.exp else {
-//            print("no exp")
-//            print("claims \(AuthenticationToken.current?.claims())")
-//            return doLogin(scope: scope, origin: origin, viewController: viewController)
-//        }
-//        print("exp \(exp)")
-
-        //TODO parser le AuthenticationToken.current?.tokenString et en extraire l'exp
-        // voir si le jeton est expiré.
-        // si non, l'utiliser pour l'échange
-        // si oui, faire logout
-        let now = Date()
-        // exp correspond à ça :
-        print("now.timeIntervalSince1970 \(now.timeIntervalSince1970)")
-
-        print("AuthenticationToken.current == nil \(AuthenticationToken.current == nil)")
-
-//        if let authenticationTokenString = AuthenticationToken.current?.tokenString {
-//            print("short cut")
-////            let authenticationTokenString = AuthenticationToken.current?.tokenString
-//            print("AuthenticationToken: \(authenticationTokenString)")
-//            // User is already logged in.
-//            let loginProviderRequest = createLoginRequest(token: authenticationTokenString, origin: origin, scope: scope)
-//            return reachFiveApi
-//                .loginWithProvider(loginProviderRequest: loginProviderRequest)
-//                .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
-//                .recoverWith { _ in
-//                    print("recover")
-//                    return self.doLogin(scope: scope, origin: origin, viewController: viewController)
-//                }
-//        }
-
-        return doLogin(scope: scope, origin: origin, viewController: viewController)
-    }
-
-    private func doLogin(
-        scope: [String]?,
-        origin: String,
-        viewController: UIViewController?
-    ) -> Future<AuthToken, ReachFiveError> {
-        print("AuthenticationToken.current == nil \(AuthenticationToken.current == nil)")
 
         let promise = Promise<AuthToken, ReachFiveError>()
-        print("providerConfig.scope \(providerConfig.scope)")
 
         // Facebook semble incapable de donner le jeton correspondant à la dernière connexion.
         // Que celui-ci soit encore frais ou expiré, tant qu'on ne fait pas un logout on obtient toujours le même lors de l'appel à AuthenticationToken.current.
@@ -124,10 +82,11 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
 
         guard let configuration: LoginConfiguration = LoginConfiguration(
             permissions: providerConfig.scope ?? ["email", "public_profile"],
-            tracking: .enabled,
+            tracking: tracking,
             nonce: nonce.codeChallenge
         )
         else {
+            promise.failure(.TechnicalError(reason: "Couldn't create FBSDKLoginKit.LoginConfiguration"))
             return promise.future
         }
         print("configuration.tracking \(configuration.tracking)")
@@ -144,29 +103,36 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
 
                 print("access token : \(token?.tokenString)")
                 let authenticationTokenString = AuthenticationToken.current?.tokenString
-
-                let pkce: Pkce = Pkce.generate()
-                //TODO factoriser ça (avec celui pour Apple et celui du web)
-                let params: [String: String?] = [
-                    "provider": "facebook",
-                    "client_id": self.sdkConfig.clientId,
-                    "id_token": authenticationTokenString,
-                    "response_type": "code",
-                    "redirect_uri": self.sdkConfig.scheme,
-                    "scope": (scope ?? []).joined(separator: " "),
-                    "code_challenge": pkce.codeChallenge,
-                    "code_challenge_method": pkce.codeChallengeMethod,
-                    "nonce": nonce.codeVerifier,
-                    "origin": origin,
-                ]
-                promise.completeWith(self.reachFiveApi.authorize(params: params).flatMap({ self.authWithCode(code: $0, pkce: pkce) }))
+                
+                if tracking == .enabled, let token {
+                    let loginProviderRequest = self.createLoginRequest(token: token, origin: origin, scope: scope)
+                    promise.completeWith(self.reachFiveApi
+                        .loginWithProvider(loginProviderRequest: loginProviderRequest)
+                        .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) }))
+                } else {
+                    let pkce: Pkce = Pkce.generate()
+                    //TODO factoriser ça (avec celui pour Apple et celui du web)
+                    let params: [String: String?] = [
+                        "provider": self.providerConfig.providerWithVariant,
+                        "client_id": self.sdkConfig.clientId,
+                        "id_token": authenticationTokenString,
+                        "response_type": "code",
+                        "redirect_uri": self.sdkConfig.scheme,
+                        "scope": (scope ?? []).joined(separator: " "),
+                        "code_challenge": pkce.codeChallenge,
+                        "code_challenge_method": pkce.codeChallengeMethod,
+                        "nonce": nonce.codeVerifier,
+                        "origin": origin,
+                    ]
+                    promise.completeWith(self.reachFiveApi.authorize(params: params).flatMap({ self.authWithCode(code: $0, pkce: pkce) }))
+                }
             }
         }
 
         return promise.future
     }
 
-    func authWithCode(code: String, pkce: Pkce) -> Future<AuthToken, ReachFiveError> {
+    private func authWithCode(code: String, pkce: Pkce) -> Future<AuthToken, ReachFiveError> {
         let authCodeRequest = AuthCodeRequest(
             clientId: sdkConfig.clientId,
             code: code,
@@ -177,7 +143,18 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
             .authWithCode(authCodeRequest: authCodeRequest)
             .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
     }
-
+    
+    private func createLoginRequest(token: AccessToken, origin: String, scope: [String]?) -> LoginProviderRequest {
+        LoginProviderRequest(
+            provider: providerConfig.providerWithVariant,
+            providerToken: token.tokenString,
+            code: nil,
+            origin: origin,
+            clientId: sdkConfig.clientId,
+            responseType: "token",
+            scope: scope?.joined(separator: " ") ?? self.clientConfigResponse.scope
+        )
+    }
 
     public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         FBSDKCoreKit.ApplicationDelegate.shared.application(app, open: url, options: options)
