@@ -21,6 +21,6 @@ Pod::Spec.new do |spec|
   }
 
   spec.dependency 'Reach5'
-  spec.dependency 'FBSDKCoreKit', '~> 17.0.0'
-  spec.dependency 'FBSDKLoginKit', '~> 17.0.0'
+  spec.dependency 'FBSDKCoreKit', '~> 17.4.0'
+  spec.dependency 'FBSDKLoginKit', '~> 17.4.0'
 end

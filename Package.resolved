@@ -1,5 +1,5 @@
 {
-  "originHash" : "b4c4419cb4d4b058b7b547bce0792dace26e44409257e0a8db514d3e0157cfe9",
+  "originHash" : "fc1d9f9526b49a26a0113f94512fcb6a60ea189a315849b1166495d5537288e3",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/facebook/facebook-ios-sdk.git",
       "state" : {
-        "revision" : "b02aef326d67cb332d20a0c3f62cc981f8fc3250",
-        "version" : "17.3.0"
+        "revision" : "619d1772808425faa010d92293b26eeb9bc1d630",
+        "version" : "17.4.0"
       }
     },
     {

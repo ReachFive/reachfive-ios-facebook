@@ -11,7 +11,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/ReachFive/reachfive-ios.git", .upToNextMajor(from: "7.0.0")),
-        .package(url: "https://github.com/facebook/facebook-ios-sdk.git", .upToNextMinor(from: "17.0.0")),
+        .package(url: "https://github.com/facebook/facebook-ios-sdk.git", .upToNextMinor(from: "17.4.0")),
     ],
     targets: [
         .target(
