@@ -88,7 +88,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
 
     private func createLoginRequest(token: AccessToken?, origin: String, scope: [String]?) -> LoginProviderRequest {
         LoginProviderRequest(
-            provider: providerConfig.provider,
+            provider: providerConfig.providerWithVariant,
             providerToken: token?.tokenString,
             code: nil,
             origin: origin,
