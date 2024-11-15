@@ -60,7 +60,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         origin: String,
         viewController: UIViewController?
     ) -> Future<AuthToken, ReachFiveError> {
-        
+
         let tracking: LoginTracking =
         if #available(macCatalyst 14, *), ATTrackingManager.trackingAuthorizationStatus == ATTrackingManager.AuthorizationStatus.authorized {
             .enabled
@@ -103,7 +103,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
 
                 print("access token : \(token?.tokenString)")
                 let authenticationTokenString = AuthenticationToken.current?.tokenString
-                
+
                 if tracking == .enabled, let token {
                     let loginProviderRequest = self.createLoginRequest(token: token, origin: origin, scope: scope)
                     promise.completeWith(self.reachFiveApi
@@ -143,7 +143,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
             .authWithCode(authCodeRequest: authCodeRequest)
             .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
     }
-    
+
     private func createLoginRequest(token: AccessToken, origin: String, scope: [String]?) -> LoginProviderRequest {
         LoginProviderRequest(
             provider: providerConfig.providerWithVariant,

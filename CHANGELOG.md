@@ -1,5 +1,9 @@
 # Changelog
 
+## v7.1.1
+### New features
+- Fix variant communication with backend
+
 ## v7.1.0
 ### New features
 - Support choosing a variant
