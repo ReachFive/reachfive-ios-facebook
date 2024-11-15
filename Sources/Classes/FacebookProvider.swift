@@ -54,7 +54,6 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         "Provider: \(name)"
     }
 
-    //TODO faire l'ancienne méthode si on a les droits de tracking
     public func login(
         scope: [String]?,
         origin: String,
@@ -62,7 +61,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
     ) -> Future<AuthToken, ReachFiveError> {
 
         let tracking: LoginTracking =
-        if #available(macCatalyst 14, *), ATTrackingManager.trackingAuthorizationStatus == ATTrackingManager.AuthorizationStatus.authorized {
+        if #available(iOS 14, macCatalyst 14, *), ATTrackingManager.trackingAuthorizationStatus == ATTrackingManager.AuthorizationStatus.authorized {
             .enabled
         } else {
             .limited
@@ -70,7 +69,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
 
         let promise = Promise<AuthToken, ReachFiveError>()
 
-        // Facebook semble incapable de donner le jeton correspondant à la dernière connexion.
+        // Facebook semble incapable de donner le jeton d'identité (AuthenticationToken.current) correspondant à la dernière connexion.
         // Que celui-ci soit encore frais ou expiré, tant qu'on ne fait pas un logout on obtient toujours le même lors de l'appel à AuthenticationToken.current.
         // C'est non seulement très peu pratique si on devait parser le jeton pour en extraire l'exp,
         // mais à cause du nonce, il faudrait pouvoir enregistrer ce dernier et le ressortir à chaque fois.
@@ -89,8 +88,6 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
             promise.failure(.TechnicalError(reason: "Couldn't create FBSDKLoginKit.LoginConfiguration"))
             return promise.future
         }
-        print("configuration.tracking \(configuration.tracking)")
-
         LoginManager().logIn(configuration: configuration) { (res: LoginResult) in
             switch res {
             case let .failed(error):
@@ -100,16 +97,15 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
                 promise.failure(.AuthCanceled)
                 break
             case let .success(_, _, token):
-
-                print("access token : \(token?.tokenString)")
-                let authenticationTokenString = AuthenticationToken.current?.tokenString
-
-                if tracking == .enabled, let token {
+                // On suppose que si on a ce jeton c'est qu'on est dans une situation de login classique
+                if let token {
                     let loginProviderRequest = self.createLoginRequest(token: token, origin: origin, scope: scope)
                     promise.completeWith(self.reachFiveApi
                         .loginWithProvider(loginProviderRequest: loginProviderRequest)
                         .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) }))
                 } else {
+                    let authenticationTokenString = AuthenticationToken.current?.tokenString
+
                     let pkce: Pkce = Pkce.generate()
                     //TODO factoriser ça (avec celui pour Apple et celui du web)
                     let params: [String: String?] = [
