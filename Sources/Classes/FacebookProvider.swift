@@ -60,6 +60,26 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         viewController: UIViewController?
     ) -> Future<AuthToken, ReachFiveError> {
 
+        if let token = AccessToken.current, !token.isExpired {
+            // User is already logged in.
+            return accessTokenLogin(token: token, origin: origin, scope: scope)
+        }
+
+        // Facebook semble incapable de donner le jeton d'identité (AuthenticationToken.current) correspondant à la dernière connexion.
+        // Que celui-ci soit encore frais ou expiré, tant qu'on ne fait pas un logout on obtient toujours le même lors de l'appel à AuthenticationToken.current.
+        // C'est non seulement très peu pratique si on devait parser le jeton pour en extraire l'exp,
+        // mais à cause du nonce, il faudrait pouvoir enregistrer ce dernier et le ressortir à chaque fois.
+        // C'est pourquoi on fait un logout à chaque fois.
+        LoginManager().logOut()
+        return doFacebookLogin(scope: scope, origin: origin, viewController: viewController)
+    }
+
+    private func doFacebookLogin(
+        scope: [String]?,
+        origin: String,
+        viewController: UIViewController?
+    ) -> Future<AuthToken, ReachFiveError> {
+
         let tracking: LoginTracking =
         if #available(iOS 14, macCatalyst 14, *), ATTrackingManager.trackingAuthorizationStatus == ATTrackingManager.AuthorizationStatus.authorized {
             .enabled
@@ -68,13 +88,6 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         }
 
         let promise = Promise<AuthToken, ReachFiveError>()
-
-        // Facebook semble incapable de donner le jeton d'identité (AuthenticationToken.current) correspondant à la dernière connexion.
-        // Que celui-ci soit encore frais ou expiré, tant qu'on ne fait pas un logout on obtient toujours le même lors de l'appel à AuthenticationToken.current.
-        // C'est non seulement très peu pratique si on devait parser le jeton pour en extraire l'exp,
-        // mais à cause du nonce, il faudrait pouvoir enregistrer ce dernier et le ressortir à chaque fois.
-        // C'est pourquoi on fait un logout à chaque fois.
-        LoginManager().logOut()
 
         //TODO sortir le générateur aléatoire dans une classe à part
         let nonce = Pkce.generate()
@@ -88,6 +101,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
             promise.failure(.TechnicalError(reason: "Couldn't create FBSDKLoginKit.LoginConfiguration"))
             return promise.future
         }
+
         LoginManager().logIn(configuration: configuration) { (res: LoginResult) in
             switch res {
             case let .failed(error):
@@ -97,35 +111,44 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
                 promise.failure(.AuthCanceled)
                 break
             case let .success(_, _, token):
-                // On suppose que si on a ce jeton c'est qu'on est dans une situation de login classique
                 if let token {
-                    let loginProviderRequest = self.createLoginRequest(token: token, origin: origin, scope: scope)
-                    promise.completeWith(self.reachFiveApi
-                        .loginWithProvider(loginProviderRequest: loginProviderRequest)
-                        .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) }))
+                    // On suppose que si on a ce jeton c'est qu'on est dans une situation de connexion classique
+                    promise.completeWith(self.accessTokenLogin(token: token, origin: origin, scope: scope))
+                } else if let token = AuthenticationToken.current {
+                    // connexion limitée
+                    promise.completeWith(self.identityTokenLogin(token: token, nonce: nonce, origin: origin, scope: scope))
                 } else {
-                    let authenticationTokenString = AuthenticationToken.current?.tokenString
-
-                    let pkce: Pkce = Pkce.generate()
-                    //TODO factoriser ça (avec celui pour Apple et celui du web)
-                    let params: [String: String?] = [
-                        "provider": self.providerConfig.providerWithVariant,
-                        "client_id": self.sdkConfig.clientId,
-                        "id_token": authenticationTokenString,
-                        "response_type": "code",
-                        "redirect_uri": self.sdkConfig.scheme,
-                        "scope": (scope ?? []).joined(separator: " "),
-                        "code_challenge": pkce.codeChallenge,
-                        "code_challenge_method": pkce.codeChallengeMethod,
-                        "nonce": nonce.codeVerifier,
-                        "origin": origin,
-                    ]
-                    promise.completeWith(self.reachFiveApi.authorize(params: params).flatMap({ self.authWithCode(code: $0, pkce: pkce) }))
+                    promise.failure(.TechnicalError(reason: "No access or identity token from Facebook"))
                 }
             }
         }
 
         return promise.future
+    }
+
+    private func accessTokenLogin(token: AccessToken, origin: String, scope: [String]?) -> Future<AuthToken, ReachFiveError> {
+        let loginProviderRequest = createLoginRequest(token: token, origin: origin, scope: scope)
+        return reachFiveApi
+            .loginWithProvider(loginProviderRequest: loginProviderRequest)
+            .flatMap({ AuthToken.fromOpenIdTokenResponseFuture($0) })
+    }
+
+    private func identityTokenLogin(token: FBSDKCoreKit.AuthenticationToken, nonce: Pkce, origin: String, scope: [String]?) -> Future<AuthToken, ReachFiveError> {
+        let pkce: Pkce = Pkce.generate()
+        //TODO factoriser ça (avec celui pour Apple et celui du web)
+        let params: [String: String?] = [
+            "provider": self.providerConfig.providerWithVariant,
+            "client_id": self.sdkConfig.clientId,
+            "id_token": token.tokenString,
+            "response_type": "code",
+            "redirect_uri": self.sdkConfig.scheme,
+            "scope": (scope ?? []).joined(separator: " "),
+            "code_challenge": pkce.codeChallenge,
+            "code_challenge_method": pkce.codeChallengeMethod,
+            "nonce": nonce.codeVerifier,
+            "origin": origin,
+        ]
+        return self.reachFiveApi.authorize(params: params).flatMap({ self.authWithCode(code: $0, pkce: pkce) })
     }
 
     private func authWithCode(code: String, pkce: Pkce) -> Future<AuthToken, ReachFiveError> {
