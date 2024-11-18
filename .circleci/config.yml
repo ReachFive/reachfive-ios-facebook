@@ -8,7 +8,7 @@ version: 2.1
 jobs:
   build:
     macos:
-      xcode: "15.3.0"
+      xcode: "16.1.0"
     steps:
       - checkout
       - run:
@@ -21,7 +21,7 @@ jobs:
             pod lib lint Reach5Facebook.podspec
   build-for-release:
     macos:
-      xcode: "15.3.0"
+      xcode: "16.1.0"
     steps:
       - checkout
       - run:
@@ -35,7 +35,7 @@ jobs:
 
   publish:
     macos:
-      xcode: "15.3.0"
+      xcode: "16.1.0"
     steps:
       - checkout
       - run:
