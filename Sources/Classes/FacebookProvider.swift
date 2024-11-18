@@ -66,6 +66,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         }
 
         // Facebook semble incapable de donner le jeton d'identité (AuthenticationToken.current) correspondant à la dernière connexion.
+        // cf. https://github.com/facebook/facebook-ios-sdk/issues/1663
         // Que celui-ci soit encore frais ou expiré, tant qu'on ne fait pas un logout on obtient toujours le même lors de l'appel à AuthenticationToken.current.
         // C'est non seulement très peu pratique si on devait parser le jeton pour en extraire l'exp,
         // mais à cause du nonce, il faudrait pouvoir enregistrer ce dernier et le ressortir à chaque fois.
