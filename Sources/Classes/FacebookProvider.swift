@@ -84,12 +84,12 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         if #available(iOS 14, macCatalyst 14, *), ATTrackingManager.trackingAuthorizationStatus == ATTrackingManager.AuthorizationStatus.authorized {
             .enabled
         } else {
+            //TODO est-ce que c'est vraiment le bon comportement pour iOS <= 13 ?
             .limited
         }
 
         let promise = Promise<AuthToken, ReachFiveError>()
 
-        //TODO sortir le générateur aléatoire dans une classe à part
         let nonce = Pkce.generate()
 
         guard let configuration: LoginConfiguration = LoginConfiguration(
