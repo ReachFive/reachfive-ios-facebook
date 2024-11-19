@@ -10,9 +10,11 @@ public class FacebookProvider: ProviderCreator {
 
     public var name: String = NAME
     public var variant: String?
+    public var prefersLoginTracking: LoginTracking
 
-    public init(variant: String? = nil) {
+    public init(variant: String? = nil, prefersLoginTracking: LoginTracking = .limited) {
         self.variant = variant
+        self.prefersLoginTracking = prefersLoginTracking
     }
 
     public func create(
@@ -25,7 +27,8 @@ public class FacebookProvider: ProviderCreator {
             sdkConfig: sdkConfig,
             providerConfig: providerConfig,
             reachFiveApi: reachFiveApi,
-            clientConfigResponse: clientConfigResponse
+            clientConfigResponse: clientConfigResponse,
+            prefersLoginTracking: prefersLoginTracking
         )
     }
 }
@@ -38,16 +41,20 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
     var reachFiveApi: ReachFiveApi
     var clientConfigResponse: ClientConfigResponse
 
+    var prefersLoginTracking: LoginTracking
+
     public init(
         sdkConfig: SdkConfig,
         providerConfig: ProviderConfig,
         reachFiveApi: ReachFiveApi,
-        clientConfigResponse: ClientConfigResponse
+        clientConfigResponse: ClientConfigResponse,
+        prefersLoginTracking: LoginTracking
     ) {
         self.sdkConfig = sdkConfig
         self.providerConfig = providerConfig
         self.reachFiveApi = reachFiveApi
         self.clientConfigResponse = clientConfigResponse
+        self.prefersLoginTracking = prefersLoginTracking
     }
 
     public override var description: String {
@@ -63,6 +70,11 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         if let token = AccessToken.current, !token.isExpired {
             // User is already logged in.
             return accessTokenLogin(token: token, origin: origin, scope: scope)
+                .recoverWith { _ in
+                    // Si l'utilisateur a changé son trackingAuthorizationStatus de .authorized à .denied par exemple.
+                    LoginManager().logOut()
+                    return self.doFacebookLogin(scope: scope, origin: origin, viewController: viewController)
+                }
         }
 
         // Facebook semble incapable de donner le jeton d'identité (AuthenticationToken.current) correspondant à la dernière connexion.
@@ -81,11 +93,13 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         viewController: UIViewController?
     ) -> Future<AuthToken, ReachFiveError> {
 
-        let tracking: LoginTracking =
-        if #available(iOS 14, macCatalyst 14, *), ATTrackingManager.trackingAuthorizationStatus == ATTrackingManager.AuthorizationStatus.authorized {
-            .enabled
+        let trackingDemandé: LoginTracking =
+        if #available(iOS 14, *), ATTrackingManager.trackingAuthorizationStatus == ATTrackingManager.AuthorizationStatus.authorized {
+            prefersLoginTracking
+        } else if #unavailable(iOS 14) {
+            //forcer .limited ou choisir prefersLoginTracking ?
+            .limited
         } else {
-            //TODO est-ce que c'est vraiment le bon comportement pour iOS <= 13 ?
             .limited
         }
 
@@ -95,7 +109,8 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
 
         guard let configuration: LoginConfiguration = LoginConfiguration(
             permissions: providerConfig.scope ?? ["email", "public_profile"],
-            tracking: tracking,
+            // Facebook semble forcer à .limited si trackingAuthorizationStatus != .authorized
+            tracking: trackingDemandé,
             nonce: nonce.codeChallenge
         )
         else {
@@ -111,13 +126,28 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
             case .cancelled:
                 promise.failure(.AuthCanceled)
                 break
-            case let .success(_, _, token):
-                if let token {
-                    // On suppose que si on a ce jeton c'est qu'on est dans une situation de connexion classique
-                    promise.completeWith(self.accessTokenLogin(token: token, origin: origin, scope: scope))
-                } else if let token = AuthenticationToken.current {
+            case let .success(_, _, accessToken):
+
+                let identityToken = AuthenticationToken.current
+
+                // On obtient toujours un jeton d'accès avec LoginConfiguration.tracking == .enabled
+                // Mais si trackingAuthorizationStatus != .authorized le jeton qu'on obtient est invalide
+                // Ç'aurait été bien qu'on eusse accès au tracking effectif fait par Facebook
+                if let accessToken, trackingDemandé == .enabled {
+                    // connexion classique
+                    promise.completeWith(self.accessTokenLogin(token: accessToken, origin: origin, scope: scope)
+                        .recoverWith { error in
+                            // si jamais on s'est trompé, on tente une connexion limitée
+                            if let identityToken {
+                                self.identityTokenLogin(token: identityToken, nonce: nonce, origin: origin, scope: scope)
+                            } else {
+                                Future(error: error)
+                            }
+                        }
+                    )
+                } else if let identityToken {
                     // connexion limitée
-                    promise.completeWith(self.identityTokenLogin(token: token, nonce: nonce, origin: origin, scope: scope))
+                    promise.completeWith(self.identityTokenLogin(token: identityToken, nonce: nonce, origin: origin, scope: scope))
                 } else {
                     promise.failure(.TechnicalError(reason: "No access or identity token from Facebook"))
                 }
