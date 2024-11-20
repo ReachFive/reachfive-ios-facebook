@@ -97,8 +97,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         if #available(iOS 14, *), ATTrackingManager.trackingAuthorizationStatus == ATTrackingManager.AuthorizationStatus.authorized {
             prefersLoginTracking
         } else if #unavailable(iOS 14) {
-            //forcer .limited ou choisir prefersLoginTracking ?
-            .limited
+            prefersLoginTracking
         } else {
             .limited
         }
