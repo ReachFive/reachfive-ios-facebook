@@ -16,7 +16,7 @@ PODS:
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.8)
     - DeviceKit (~> 5.1)
-  - Reach5Facebook (7.1.1):
+  - Reach5Facebook (7.2.0):
     - FBSDKCoreKit (~> 17.4.0)
     - FBSDKLoginKit (~> 17.4.0)
     - Reach5 (~> 7.1.4)
@@ -51,7 +51,7 @@ SPEC CHECKSUMS:
   FBSDKCoreKit_Basics: 151b43db8b834d3f0e02f95d36a44ffd36265e45
   FBSDKLoginKit: 5c1cd53c91a2282b3a4fe6e6d3dcf2b8b0d33d55
   Reach5: 007fa51c364e6d2cc4381192284fa9f01fa86dfe
-  Reach5Facebook: c286de9a44d11d4732e7fdb9c412e113dcaec695
+  Reach5Facebook: fb646d6a69484534f7c4974c4a7ec13680b8e067
 
 PODFILE CHECKSUM: 1d3677f1116ada32036527208dbf14f8cdc1056c
 
