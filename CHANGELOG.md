@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+### New features
+- Support for Facebook limited login alongside classic Facebook Login.
+
+  Choose which one you prefer with `FacebookProvider(prefersLoginTracking: .enabled)`
+
 ## v7.1.1
 ### New features
 - Fix variant communication with backend

@@ -36,4 +36,4 @@ Update to latest package versions of dependencies for SPM in XCode or with this 
 
 10. The CI will automatically publish this new version
 
-11. Finally, draft a new release in the [Github releases tab](https://github.com/ReachFive/reachfive-ios-google/releases) (copy & paste the changelog in the release's description).
+11. Finally, draft a new release in the [Github releases tab](https://github.com/ReachFive/reachfive-ios-facebook/releases) (copy & paste the changelog in the release's description).
