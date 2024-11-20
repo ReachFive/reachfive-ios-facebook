@@ -72,18 +72,10 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
             return accessTokenLogin(token: token, origin: origin, scope: scope)
                 .recoverWith { _ in
                     // Si l'utilisateur a changé son trackingAuthorizationStatus de .authorized à .denied par exemple.
-                    LoginManager().logOut()
                     return self.doFacebookLogin(scope: scope, origin: origin, viewController: viewController)
                 }
         }
 
-        // Facebook semble incapable de donner le jeton d'identité (AuthenticationToken.current) correspondant à la dernière connexion.
-        // cf. https://github.com/facebook/facebook-ios-sdk/issues/1663
-        // Que celui-ci soit encore frais ou expiré, tant qu'on ne fait pas un logout on obtient toujours le même lors de l'appel à AuthenticationToken.current.
-        // C'est non seulement très peu pratique si on devait parser le jeton pour en extraire l'exp,
-        // mais à cause du nonce, il faudrait pouvoir enregistrer ce dernier et le ressortir à chaque fois.
-        // C'est pourquoi on fait un logout à chaque fois.
-        LoginManager().logOut()
         return doFacebookLogin(scope: scope, origin: origin, viewController: viewController)
     }
 
@@ -92,8 +84,15 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         origin: String,
         viewController: UIViewController?
     ) -> Future<AuthToken, ReachFiveError> {
+        // Facebook semble incapable de donner le jeton d'identité (AuthenticationToken.current) correspondant à la dernière connexion.
+        // cf. https://github.com/facebook/facebook-ios-sdk/issues/1663
+        // Que celui-ci soit encore frais ou expiré, tant qu'on ne fait pas un logout on obtient toujours le même lors de l'appel à AuthenticationToken.current.
+        // C'est non seulement très peu pratique si on devait parser le jeton pour en extraire l'exp,
+        // mais à cause du nonce, il faudrait pouvoir enregistrer ce dernier et le ressortir à chaque fois.
+        // C'est pourquoi on fait un logout à chaque fois.
+        LoginManager().logOut()
 
-        let trackingDemandé: LoginTracking =
+        let suggestedTracking: LoginTracking =
         if #available(iOS 14, *), ATTrackingManager.trackingAuthorizationStatus == ATTrackingManager.AuthorizationStatus.authorized {
             prefersLoginTracking
         } else if #unavailable(iOS 14) {
@@ -109,7 +108,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         guard let configuration: LoginConfiguration = LoginConfiguration(
             permissions: providerConfig.scope ?? ["email", "public_profile"],
             // Facebook semble forcer à .limited si trackingAuthorizationStatus != .authorized
-            tracking: trackingDemandé,
+            tracking: suggestedTracking,
             nonce: nonce.codeChallenge
         )
         else {
@@ -132,7 +131,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
                 // On obtient toujours un jeton d'accès avec LoginConfiguration.tracking == .enabled
                 // Mais si trackingAuthorizationStatus != .authorized le jeton qu'on obtient est invalide
                 // Ç'aurait été bien qu'on eusse accès au tracking effectif fait par Facebook
-                if let accessToken, trackingDemandé == .enabled {
+                if let accessToken, suggestedTracking == .enabled {
                     // connexion classique
                     promise.completeWith(self.accessTokenLogin(token: accessToken, origin: origin, scope: scope)
                         .recoverWith { error in
