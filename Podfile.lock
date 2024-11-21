@@ -11,7 +11,7 @@ PODS:
   - FBSDKCoreKit_Basics (17.4.0)
   - FBSDKLoginKit (17.4.0):
     - FBSDKCoreKit (= 17.4.0)
-  - Reach5 (7.1.4):
+  - Reach5 (7.1.5):
     - Alamofire (~> 5.8)
     - BrightFutures (~> 8.2.0)
     - CryptoSwift (~> 1.8)
@@ -19,10 +19,10 @@ PODS:
   - Reach5Facebook (7.2.0):
     - FBSDKCoreKit (~> 17.4.0)
     - FBSDKLoginKit (~> 17.4.0)
-    - Reach5 (~> 7.1.4)
+    - Reach5 (~> 7.1.5)
 
 DEPENDENCIES:
-  - Reach5 (~> 7.1.4)
+  - Reach5 (~> 7.1.5)
   - Reach5Facebook (from `Reach5Facebook.podspec`)
 
 SPEC REPOS:
@@ -50,9 +50,9 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 94d7461d0cecf441b1ba7c41acfff41daa8ccd41
   FBSDKCoreKit_Basics: 151b43db8b834d3f0e02f95d36a44ffd36265e45
   FBSDKLoginKit: 5c1cd53c91a2282b3a4fe6e6d3dcf2b8b0d33d55
-  Reach5: 007fa51c364e6d2cc4381192284fa9f01fa86dfe
-  Reach5Facebook: fb646d6a69484534f7c4974c4a7ec13680b8e067
+  Reach5: c2789236aac1fe19e98ff6bf037d6e987fc65409
+  Reach5Facebook: d34c971fff4c092437be63ace65cb15a53e1344c
 
-PODFILE CHECKSUM: 1d3677f1116ada32036527208dbf14f8cdc1056c
+PODFILE CHECKSUM: c4f4e807e2da293f2f6b7ca3b59233cf6136f46e
 
 COCOAPODS: 1.16.2
