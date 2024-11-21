@@ -1,5 +1,5 @@
 {
-  "originHash" : "fc1d9f9526b49a26a0113f94512fcb6a60ea189a315849b1166495d5537288e3",
+  "originHash" : "dfbb5550ab7f64ea280916ec89e4ffa0b1264437170cb51a1c5fc7bf3f4773be",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ReachFive/reachfive-ios.git",
       "state" : {
-        "revision" : "2abb566dd5b3f89af8f26f3d8fbd889124c66131",
-        "version" : "7.1.4"
+        "revision" : "5960eb27691587d7162a0176c0b4838b7088ee81",
+        "version" : "7.1.5"
       }
     }
   ],
