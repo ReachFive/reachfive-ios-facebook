@@ -20,7 +20,7 @@ Pod::Spec.new do |spec|
     'Reach5Facebook' => ['Sources/PrivacyInfo.xcprivacy']
   }
 
-  spec.dependency 'Reach5', '~> 7.1.5'
+  spec.dependency 'Reach5', '>= 7.1.5'
   spec.dependency 'FBSDKCoreKit', '~> 17.4.0'
   spec.dependency 'FBSDKLoginKit', '~> 17.4.0'
 end

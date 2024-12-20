@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## v7.2.1
+### Bug fixes
+- Fix dependency version to Reach5
+
 ## v7.2.0
 ### New features
 - Support for Facebook limited login alongside classic Facebook Login.
