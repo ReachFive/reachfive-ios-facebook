@@ -90,7 +90,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         // C'est non seulement très peu pratique si on devait parser le jeton pour en extraire l'exp,
         // mais à cause du nonce, il faudrait pouvoir enregistrer ce dernier et le ressortir à chaque fois.
         // C'est pourquoi on fait un logout à chaque fois.
-        LoginManager().logOut()
+        self.logout()
 
         let suggestedTracking: LoginTracking =
         if #available(iOS 14, *), ATTrackingManager.trackingAuthorizationStatus == ATTrackingManager.AuthorizationStatus.authorized {
@@ -132,29 +132,18 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
                         // Ç'aurait été bien qu'on eusse accès au tracking effectif fait par Facebook
                         if let accessToken, suggestedTracking == .enabled {
                             // connexion classique
-                            do {
-                                let authToken = try await self.accessTokenLogin(token: accessToken, origin: origin, scope: scope)
-                                continuation.resume(returning: authToken)
-                            } catch {
-                                // si jamais on s'est trompé, on tente une connexion limitée
-                                if let identityToken {
-                                    do {
-                                        let authToken = try await self.identityTokenLogin(token: identityToken, nonce: nonce, origin: origin, scope: scope)
-                                        continuation.resume(returning: authToken)
-                                    } catch {
-                                        continuation.resume(throwing: error)
-                                    }
-                                } else {
-                                    continuation.resume(throwing: error)
+                            continuation.resume {
+                                do {
+                                    return try await self.accessTokenLogin(token: accessToken, origin: origin, scope: scope)
+                                } catch _ where identityToken != nil {
+                                    // si jamais on s'est trompé, on tente une connexion limitée
+                                    return try await self.identityTokenLogin(token: identityToken!, nonce: nonce, origin: origin, scope: scope)
                                 }
                             }
                         } else if let identityToken {
                             // connexion limitée
-                            do {
-                                let authToken = try await self.identityTokenLogin(token: identityToken, nonce: nonce, origin: origin, scope: scope)
-                                continuation.resume(returning: authToken)
-                            } catch {
-                                continuation.resume(throwing: error)
+                            continuation.resume {
+                                try await self.identityTokenLogin(token: identityToken, nonce: nonce, origin: origin, scope: scope)
                             }
                         } else {
                             continuation.resume(throwing: ReachFiveError.TechnicalError(reason: "No access or identity token from Facebook"))
@@ -229,7 +218,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         true
     }
 
-    public func logout() async throws {
+    public func logout() {
         LoginManager().logOut()
     }
 }
