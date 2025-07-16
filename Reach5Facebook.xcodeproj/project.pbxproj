@@ -8,14 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		2A3EC12B2C59B8A900492A26 /* FacebookProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3EC12A2C59B8A900492A26 /* FacebookProvider.swift */; };
-		2A8F77AE2E05EBC4003D9AC0 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8F77AD2E05EBC0003D9AC0 /* Provider.swift */; };
 		34DD7DC6229C222D007311FE /* Reach5Facebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 34DD7DC4229C222D007311FE /* Reach5Facebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD5CD4A1D3E426DAFC904BA9 /* Pods_Reach5Facebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7459838BA92C677F2FA750B9 /* Pods_Reach5Facebook.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2A3EC12A2C59B8A900492A26 /* FacebookProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookProvider.swift; sourceTree = "<group>"; };
-		2A8F77AD2E05EBC0003D9AC0 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		2AB8491C2BB338DC00F84026 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		34DD7DC1229C222D007311FE /* Reach5Facebook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Reach5Facebook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		34DD7DC4229C222D007311FE /* Reach5Facebook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reach5Facebook.h; sourceTree = "<group>"; };
@@ -40,7 +38,6 @@
 		2A3EC1292C59B85E00492A26 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				2A8F77AD2E05EBC0003D9AC0 /* Provider.swift */,
 				2A3EC12A2C59B8A900492A26 /* FacebookProvider.swift */,
 			);
 			path = Classes;
@@ -202,7 +199,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A8F77AE2E05EBC4003D9AC0 /* Provider.swift in Sources */,
 				2A3EC12B2C59B8A900492A26 /* FacebookProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
