@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import Reach5
 import FBSDKLoginKit
 import AppTrackingTransparency
 
@@ -63,25 +64,26 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         scope: [String]?,
         origin: String,
         viewController: UIViewController?
-    ) async -> Result<AuthToken, ReachFiveError> {
+    ) async throws -> AuthToken {
 
         if let token = AccessToken.current, !token.isExpired {
             // User is already logged in.
-            return await accessTokenLogin(token: token, origin: origin, scope: scope)
-                .flatMapErrorAsync { _ in
-                    // Si l'utilisateur a changé son trackingAuthorizationStatus de .authorized à .denied par exemple.
-                    return await self.doFacebookLogin(scope: scope, origin: origin, viewController: viewController)
-                }
+            do {
+                return try await accessTokenLogin(token: token, origin: origin, scope: scope)
+            } catch {
+                // Si l'utilisateur a changé son trackingAuthorizationStatus de .authorized à .denied par exemple.
+                return try await self.doFacebookLogin(scope: scope, origin: origin, viewController: viewController)
+            }
         }
 
-        return await doFacebookLogin(scope: scope, origin: origin, viewController: viewController)
+        return try await doFacebookLogin(scope: scope, origin: origin, viewController: viewController)
     }
 
     private func doFacebookLogin(
         scope: [String]?,
         origin: String,
         viewController: UIViewController?
-    ) async -> Result<AuthToken, ReachFiveError> {
+    ) async throws -> AuthToken {
         // Facebook semble incapable de donner le jeton d'identité (AuthenticationToken.current) correspondant à la dernière connexion.
         // cf. https://github.com/facebook/facebook-ios-sdk/issues/1663
         // Que celui-ci soit encore frais ou expiré, tant qu'on ne fait pas un logout on obtient toujours le même lors de l'appel à AuthenticationToken.current.
@@ -108,43 +110,54 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
             nonce: nonce.codeChallenge
         )
         else {
-            return .failure(.TechnicalError(reason: "Couldn't create FBSDKLoginKit.LoginConfiguration"))
+            throw ReachFiveError.TechnicalError(reason: "Couldn't create FBSDKLoginKit.LoginConfiguration")
         }
 
-        return await withCheckedContinuation { continuation in
+        return try await withCheckedThrowingContinuation { continuation in
             LoginManager().logIn(configuration: configuration) { (res: LoginResult) in
                 Task {
                     switch res {
                     case let .failed(error):
-                        continuation.resume(returning: .failure(.TechnicalError(reason: error.localizedDescription)))
+                        continuation.resume(throwing: ReachFiveError.TechnicalError(reason: error.localizedDescription))
                         break
                     case .cancelled:
-                        continuation.resume(returning: .failure(.AuthCanceled))
+                        continuation.resume(throwing: ReachFiveError.AuthCanceled)
                         break
                     case let .success(_, _, accessToken):
-                        
+
                         let identityToken = AuthenticationToken.current
-                        
+
                         // On obtient toujours un jeton d'accès avec LoginConfiguration.tracking == .enabled
                         // Mais si trackingAuthorizationStatus != .authorized le jeton qu'on obtient est invalide
                         // Ç'aurait été bien qu'on eusse accès au tracking effectif fait par Facebook
                         if let accessToken, suggestedTracking == .enabled {
                             // connexion classique
-                            continuation.resume(returning: await self.accessTokenLogin(token: accessToken, origin: origin, scope: scope)
-                                .flatMapErrorAsync { error in
-                                    // si jamais on s'est trompé, on tente une connexion limitée
-                                    if let identityToken {
-                                        await self.identityTokenLogin(token: identityToken, nonce: nonce, origin: origin, scope: scope)
-                                    } else {
-                                        .failure(error)
+                            do {
+                                let authToken = try await self.accessTokenLogin(token: accessToken, origin: origin, scope: scope)
+                                continuation.resume(returning: authToken)
+                            } catch {
+                                // si jamais on s'est trompé, on tente une connexion limitée
+                                if let identityToken {
+                                    do {
+                                        let authToken = try await self.identityTokenLogin(token: identityToken, nonce: nonce, origin: origin, scope: scope)
+                                        continuation.resume(returning: authToken)
+                                    } catch {
+                                        continuation.resume(throwing: error)
                                     }
+                                } else {
+                                    continuation.resume(throwing: error)
                                 }
-                            )
+                            }
                         } else if let identityToken {
                             // connexion limitée
-                            continuation.resume(returning: await self.identityTokenLogin(token: identityToken, nonce: nonce, origin: origin, scope: scope))
+                            do {
+                                let authToken = try await self.identityTokenLogin(token: identityToken, nonce: nonce, origin: origin, scope: scope)
+                                continuation.resume(returning: authToken)
+                            } catch {
+                                continuation.resume(throwing: error)
+                            }
                         } else {
-                            continuation.resume(returning: .failure(.TechnicalError(reason: "No access or identity token from Facebook")))
+                            continuation.resume(throwing: ReachFiveError.TechnicalError(reason: "No access or identity token from Facebook"))
                         }
                     }
                 }
@@ -152,14 +165,13 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         }
     }
 
-    private func accessTokenLogin(token: AccessToken, origin: String, scope: [String]?) async -> Result<AuthToken, ReachFiveError> {
+    private func accessTokenLogin(token: AccessToken, origin: String, scope: [String]?) async throws -> AuthToken {
         let loginProviderRequest = createLoginRequest(token: token, origin: origin, scope: scope)
-        return await reachFiveApi
-            .loginWithProvider(loginProviderRequest: loginProviderRequest)
-            .flatMap({ AuthToken.fromOpenIdTokenResponse($0) })
+        let response = try await reachFiveApi.loginWithProvider(loginProviderRequest: loginProviderRequest)
+        return try AuthToken.fromOpenIdTokenResponse(response)
     }
 
-    private func identityTokenLogin(token: FBSDKCoreKit.AuthenticationToken, nonce: Pkce, origin: String, scope: [String]?) async -> Result<AuthToken, ReachFiveError> {
+    private func identityTokenLogin(token: FBSDKCoreKit.AuthenticationToken, nonce: Pkce, origin: String, scope: [String]?) async throws -> AuthToken {
         let pkce: Pkce = Pkce.generate()
         //TODO factoriser ça (avec celui pour Apple et celui du web)
         let params: [String: String?] = [
@@ -174,19 +186,19 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
             "nonce": nonce.codeVerifier,
             "origin": origin,
         ]
-        return await self.reachFiveApi.authorize(params: params).flatMapAsync({ await self.authWithCode(code: $0, pkce: pkce) })
+        let code = try await self.reachFiveApi.authorize(params: params)
+        return try await self.authWithCode(code: code, pkce: pkce)
     }
 
-    private func authWithCode(code: String, pkce: Pkce) async -> Result<AuthToken, ReachFiveError> {
+    private func authWithCode(code: String, pkce: Pkce) async throws -> AuthToken {
         let authCodeRequest = AuthCodeRequest(
             clientId: sdkConfig.clientId,
             code: code,
             redirectUri: sdkConfig.scheme,
             pkce: pkce
         )
-        return await reachFiveApi
-            .authWithCode(authCodeRequest: authCodeRequest)
-            .flatMap({ AuthToken.fromOpenIdTokenResponse($0) })
+        let response = try await reachFiveApi.authWithCode(authCodeRequest: authCodeRequest)
+        return try AuthToken.fromOpenIdTokenResponse(response)
     }
 
     private func createLoginRequest(token: AccessToken, origin: String, scope: [String]?) -> LoginProviderRequest {
@@ -217,7 +229,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         true
     }
 
-    public func logout() async -> Result<(), ReachFiveError> {
-        .success(LoginManager().logOut())
+    public func logout() async throws {
+        LoginManager().logOut()
     }
 }
