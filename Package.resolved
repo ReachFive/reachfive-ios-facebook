@@ -1,42 +1,6 @@
 {
-  "originHash" : "0d97b071130190e651ce570b52017c00762f34a80d1d205426a5534a8a35bf49",
+  "originHash" : "6c090d9d461dccbaefbe8a912735c410138c6a12a4dd855c78376d8e871e9f1d",
   "pins" : [
-    {
-      "identity" : "alamofire",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Alamofire/Alamofire.git",
-      "state" : {
-        "revision" : "513364f870f6bfc468f9d2ff0a95caccc10044c5",
-        "version" : "5.10.2"
-      }
-    },
-    {
-      "identity" : "brightfutures",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Thomvis/BrightFutures.git",
-      "state" : {
-        "revision" : "fa66fa183dce7196d431244d0215748cd14c5758",
-        "version" : "8.2.0"
-      }
-    },
-    {
-      "identity" : "cryptoswift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
-      "state" : {
-        "revision" : "132f5b209cd0251067f29cdb59c97d9f8a63252a",
-        "version" : "1.8.5"
-      }
-    },
-    {
-      "identity" : "devicekit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/devicekit/DeviceKit.git",
-      "state" : {
-        "revision" : "513b9d7e7a1bd46504a1009bbab943b75ce2f195",
-        "version" : "5.6.0"
-      }
-    },
     {
       "identity" : "facebook-ios-sdk",
       "kind" : "remoteSourceControl",
@@ -51,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ReachFive/reachfive-ios.git",
       "state" : {
-        "revision" : "825fab1e3d302ae1428714f438ce2dd007e44aa2",
-        "version" : "8.2.0"
+        "revision" : "f80bbd5dbed9ceb05fc5880051ed4fa81f60a76f",
+        "version" : "9.0.0"
       }
     }
   ],
