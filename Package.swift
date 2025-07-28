@@ -10,7 +10,7 @@ let package = Package(
         .library(name: "Reach5Facebook", targets: ["Reach5Facebook"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/ReachFive/reachfive-ios.git", "7.1.5"..<"9.0.0"),
+        .package(url: "https://github.com/ReachFive/reachfive-ios.git", .upToNextMajor(from: "9.0.0")),
         .package(url: "https://github.com/facebook/facebook-ios-sdk.git", .upToNextMinor(from: "17.4.0")),
     ],
     targets: [
@@ -21,8 +21,9 @@ let package = Package(
                 .product(name: "FacebookCore", package: "facebook-ios-sdk"),
                 .product(name: "FacebookLogin", package: "facebook-ios-sdk"),
             ],
+            path: "Sources",
             resources: [
-              .copy("PrivacyInfo.xcprivacy")
+              .process("PrivacyInfo.xcprivacy")
             ]
         ),
     ]
