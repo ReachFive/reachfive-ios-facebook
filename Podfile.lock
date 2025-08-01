@@ -11,9 +11,10 @@ PODS:
   - Reach5Facebook (8.0.0):
     - FBSDKCoreKit (~> 17.4.0)
     - FBSDKLoginKit (~> 17.4.0)
+    - Reach5 (>= 9.0.0)
 
 DEPENDENCIES:
-  - Reach5 (from `../reachfive-ios/Reach5.podspec`)
+  - Reach5 (>= 9.0.0)
   - Reach5Facebook (from `Reach5Facebook.podspec`)
 
 SPEC REPOS:
@@ -22,10 +23,9 @@ SPEC REPOS:
     - FBSDKCoreKit
     - FBSDKCoreKit_Basics
     - FBSDKLoginKit
+    - Reach5
 
 EXTERNAL SOURCES:
-  Reach5:
-    :path: "../reachfive-ios/Reach5.podspec"
   Reach5Facebook:
     :path: Reach5Facebook.podspec
 
@@ -34,9 +34,9 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 94d7461d0cecf441b1ba7c41acfff41daa8ccd41
   FBSDKCoreKit_Basics: 151b43db8b834d3f0e02f95d36a44ffd36265e45
   FBSDKLoginKit: 5c1cd53c91a2282b3a4fe6e6d3dcf2b8b0d33d55
-  Reach5: 190b22889b32a4382bf896a366dad4243b541560
-  Reach5Facebook: d71bd9348e565c3b301bd3f2b5ff89079588972e
+  Reach5: 61b46819572b7bc89feedc623cd7d0d46604383d
+  Reach5Facebook: 8d635d1f84f3e09b123485d223cfa4ef93130fe2
 
-PODFILE CHECKSUM: 75ddb55eaaa5f7b271a25523c234ea1781bb05f5
+PODFILE CHECKSUM: 6b770a1f3321d674a38f922ddb76b465a4fc232e
 
 COCOAPODS: 1.16.2
