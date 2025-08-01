@@ -20,12 +20,7 @@ Pod::Spec.new do |spec|
     'Reach5Facebook' => ['Sources/PrivacyInfo.xcprivacy']
   }
 
-  spec.prepare_command = <<-CMD
-    VERSION=$(ruby -r ./version.rb -e 'puts $VERSION')
-    /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION" Sources/Info.plist
-  CMD
-
-#TODO:   spec.dependency 'Reach5', '>= 7.1.5', '< 9'
+  spec.dependency 'Reach5', '>= 9.0.0'
   spec.dependency 'FBSDKCoreKit', '~> 17.4.0'
   spec.dependency 'FBSDKLoginKit', '~> 17.4.0'
 end
