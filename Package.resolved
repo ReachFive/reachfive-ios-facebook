@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ReachFive/reachfive-ios.git",
       "state" : {
-        "revision" : "f80bbd5dbed9ceb05fc5880051ed4fa81f60a76f",
-        "version" : "9.0.0"
+        "revision" : "90029981ed9f5a58acb239ad77f456214406c691",
+        "version" : "9.1.2"
       }
     }
   ],
