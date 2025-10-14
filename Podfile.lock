@@ -7,8 +7,8 @@ PODS:
   - FBSDKCoreKit_Basics (17.4.0)
   - FBSDKLoginKit (17.4.0):
     - FBSDKCoreKit (= 17.4.0)
-  - Reach5 (9.0.0)
-  - Reach5Facebook (8.0.0):
+  - Reach5 (10.0.0)
+  - Reach5Facebook (8.0.1):
     - FBSDKCoreKit (~> 17.4.0)
     - FBSDKLoginKit (~> 17.4.0)
     - Reach5 (>= 9.0.0)
@@ -34,8 +34,8 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 94d7461d0cecf441b1ba7c41acfff41daa8ccd41
   FBSDKCoreKit_Basics: 151b43db8b834d3f0e02f95d36a44ffd36265e45
   FBSDKLoginKit: 5c1cd53c91a2282b3a4fe6e6d3dcf2b8b0d33d55
-  Reach5: 61b46819572b7bc89feedc623cd7d0d46604383d
-  Reach5Facebook: 8d635d1f84f3e09b123485d223cfa4ef93130fe2
+  Reach5: 178449e40cebf36394ce74f4a153be3074ad423e
+  Reach5Facebook: 536daa0f10cefc29b9dc389f40043973d7f6af14
 
 PODFILE CHECKSUM: 6b770a1f3321d674a38f922ddb76b465a4fc232e
 
