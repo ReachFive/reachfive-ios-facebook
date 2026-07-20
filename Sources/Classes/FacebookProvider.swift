@@ -62,10 +62,11 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         "Provider: \(name)"
     }
 
+    // Le paramètre presenting n'est pas utilisé : le SDK Facebook gère sa propre présentation.
     public func login(
         scope: [String]?,
         origin: String,
-        viewController: UIViewController?
+        presenting: Presentation
     ) async throws -> AuthToken {
 
         if let token = AccessToken.current, !token.isExpired {
@@ -74,11 +75,11 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
                 return try await accessTokenLogin(token: token, origin: origin, scope: scope)
             } catch {
                 // Si l'utilisateur a changé son trackingAuthorizationStatus de .authorized à .denied par exemple.
-                return try await self.doFacebookLogin(scope: scope, origin: origin, viewController: viewController)
+                return try await self.doFacebookLogin(scope: scope, origin: origin)
             }
         }
 
-        return try await doFacebookLogin(scope: scope, origin: origin, viewController: viewController)
+        return try await doFacebookLogin(scope: scope, origin: origin)
     }
 
     /// Isolated to the main actor because it drives the Facebook SDK's UI: `logIn` is documented as
@@ -87,8 +88,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
     @MainActor
     private func doFacebookLogin(
         scope: [String]?,
-        origin: String,
-        viewController: UIViewController?
+        origin: String
     ) async throws -> AuthToken {
         // Facebook semble incapable de donner le jeton d'identité (AuthenticationToken.current) correspondant à la dernière connexion.
         // cf. https://github.com/facebook/facebook-ios-sdk/issues/1663
