@@ -3,22 +3,13 @@
 </p>
 
 [![CircleCI](https://circleci.com/gh/ReachFive/reachfive-ios-facebook/tree/master.svg?style=svg)](https://circleci.com/gh/ReachFive/reachfive-ios-facebook/tree/master)
-[![Download](https://img.shields.io/cocoapods/v/Reach5Facebook.svg?style=flat) ](https://cocoapods.org/pods/Reach5Facebook)
+[![Download](https://img.shields.io/github/v/tag/ReachFive/reachfive-ios-facebook?style=flat)](https://github.com/ReachFive/reachfive-ios-facebook/releases)
 
 # ReachFive Identity iOS SDK for Facebook Login
 
 ## Installation
 
 This project is dependent on the primary Reach5 component found at https://github.com/ReachFive/reachfive-ios
-
-
-### Cocoapods
-
-Add the following line to your **Podfile**:
-
-```
-pod 'Reach5Facebook'
-```
 
 ### Swift Package Manager
 Open the following menu item in Xcode:
@@ -38,10 +29,6 @@ dependencies: [
     .package(url: "https://github.com/ReachFive/reachfive-ios-facebook.git", .upToNextMajor(from: "8.0.0"))
 ]
 ```
-
-## XCode
-
-Open the project folder to view it as a package project, not the .xcodeproj or .xcworkspace which makes them seen as a Pod project
 
 ## Usage
 Refer to the [public documentation](https://developer.reachfive.com/sdk-ios/index.html) to install the SDKs and to initialize your ReachFive client.
