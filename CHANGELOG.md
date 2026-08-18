@@ -9,6 +9,9 @@
 ### Other changes
 - A limited login with no explicit `scope` now requests the scope of the client configuration, as the classic login already did, instead of an empty scope.
 
+### Dependencies
+- Updated Facebook from 17.4 to 18.1
+
 ## v8.0.1
 ### Bug fixes
 - Support Reach5 dependency version for new major version
