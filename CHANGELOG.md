@@ -3,7 +3,7 @@
 ## Unreleased
 
 ### Breaking changes
-- `login` takes a `presenting: Presentation` parameter instead of `viewController: UIViewController?`, following the Reach5 core `Provider` protocol change: `login(scope:origin:presenting: Presentation(from: self))`. The parameter is not used by this provider (the Facebook SDK manages its own presentation).
+- `login` takes a `presenting: Presentation` parameter instead of `viewController: UIViewController?`, although it is not used (the Facebook SDK manages its own presentation).
 
 ## v8.0.1
 ### Bug fixes
