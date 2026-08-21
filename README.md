@@ -26,7 +26,7 @@ Or directly add it to the dependencies value of your Package.swift or the Packag
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/ReachFive/reachfive-ios-facebook.git", .upToNextMajor(from: "8.0.0"))
+    .package(url: "https://github.com/ReachFive/reachfive-ios-facebook.git", .upToNextMajor(from: "9.0.0"))
 ]
 ```
 
