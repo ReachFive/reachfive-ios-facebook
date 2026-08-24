@@ -69,17 +69,36 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         // failing late would leave them logged out for nothing.
         let reachFive = try requireReachFive()
 
-        if let token = AccessToken.current, !token.isExpired {
+        // A stored access token is only worth trying while App Tracking Transparency still allows the
+        // classic login: Facebook keeps handing it out afterwards, but the backend rejects it.
+        if let token = AccessToken.current, !token.isExpired, !trackingForcedToLimited {
             // User is already logged in.
             do {
                 return try await accessTokenLogin(reachFive: reachFive, token: token, origin: origin, scope: scope)
-            } catch {
-                // For instance when the user switched their trackingAuthorizationStatus from .authorized to .denied.
-                return try await self.doFacebookLogin(reachFive: reachFive, scope: scope, origin: origin)
+            } catch let error as ReachFiveError {
+                switch error {
+                case .RequestError, .AuthFailure:
+                    // The backend rejected the Facebook token, so it is stale: only a new login fixes it.
+                    return try await self.doFacebookLogin(reachFive: reachFive, scope: scope, origin: origin)
+                case .AuthCanceled, .TechnicalError:
+                    // A network or server failure: logging the user out of Facebook and asking them to
+                    // consent again fixes neither, and destroys a session that is still valid.
+                    throw error
+                }
             }
         }
 
         return try await doFacebookLogin(reachFive: reachFive, scope: scope, origin: origin)
+    }
+
+    /// Whether App Tracking Transparency forces the login to `.limited`, whatever the app prefers.
+    /// Below iOS 14 there is no such status, so nothing is forced.
+    private var trackingForcedToLimited: Bool {
+        if #available(iOS 14, *) {
+            ATTrackingManager.trackingAuthorizationStatus != .authorized
+        } else {
+            false
+        }
     }
 
     /// Isolated to the main actor because it drives the Facebook SDK's UI: `logIn` is documented as
@@ -99,14 +118,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         // Hence the logout before each login.
         self.logout()
 
-        let suggestedTracking: LoginTracking =
-        if #available(iOS 14, *), ATTrackingManager.trackingAuthorizationStatus == ATTrackingManager.AuthorizationStatus.authorized {
-            prefersLoginTracking
-        } else if #unavailable(iOS 14) {
-            prefersLoginTracking
-        } else {
-            .limited
-        }
+        let suggestedTracking: LoginTracking = trackingForcedToLimited ? .limited : prefersLoginTracking
 
         let nonce = Pkce.generate()
 
