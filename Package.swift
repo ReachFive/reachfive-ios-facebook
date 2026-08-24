@@ -10,7 +10,7 @@ let package = Package(
         .library(name: "Reach5Facebook", targets: ["Reach5Facebook"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/ReachFive/reachfive-ios.git", "9.0.0"..<"100.0.0"),
+        .package(url: "https://github.com/ReachFive/reachfive-ios.git", .upToNextMajor(from: "11.0.0")),
         .package(url: "https://github.com/facebook/facebook-ios-sdk.git", .upToNextMinor(from: "18.1.0")),
     ],
     targets: [
