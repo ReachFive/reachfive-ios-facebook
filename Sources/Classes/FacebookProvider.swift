@@ -64,18 +64,22 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         origin: String,
         presenting: Presentation
     ) async throws -> AuthToken {
+        // Read before Facebook's dialog opens, so a deallocated SDK fails the login right away instead of
+        // once the user has signed in — `doFacebookLogin` even logs the user out of Facebook first, so
+        // failing late would leave them logged out for nothing.
+        let reachFive = try requireReachFive()
 
         if let token = AccessToken.current, !token.isExpired {
             // User is already logged in.
             do {
-                return try await accessTokenLogin(token: token, origin: origin, scope: scope)
+                return try await accessTokenLogin(reachFive: reachFive, token: token, origin: origin, scope: scope)
             } catch {
                 // For instance when the user switched their trackingAuthorizationStatus from .authorized to .denied.
-                return try await self.doFacebookLogin(scope: scope, origin: origin)
+                return try await self.doFacebookLogin(reachFive: reachFive, scope: scope, origin: origin)
             }
         }
 
-        return try await doFacebookLogin(scope: scope, origin: origin)
+        return try await doFacebookLogin(reachFive: reachFive, scope: scope, origin: origin)
     }
 
     /// Isolated to the main actor because it drives the Facebook SDK's UI: `logIn` is documented as
@@ -83,6 +87,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
     /// should be called on the main thread")
     @MainActor
     private func doFacebookLogin(
+        reachFive: ReachFive,
         scope: [String]?,
         origin: String
     ) async throws -> AuthToken {
@@ -136,16 +141,16 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
                             // classic login
                             continuation.resume {
                                 do {
-                                    return try await self.accessTokenLogin(token: accessToken, origin: origin, scope: scope)
+                                    return try await self.accessTokenLogin(reachFive: reachFive, token: accessToken, origin: origin, scope: scope)
                                 } catch _ where identityToken != nil {
                                     // in case we got it wrong, try a limited login
-                                    return try await self.identityTokenLogin(token: identityToken!, nonce: nonce, origin: origin, scope: scope)
+                                    return try await self.identityTokenLogin(reachFive: reachFive, token: identityToken!, nonce: nonce, origin: origin, scope: scope)
                                 }
                             }
                         } else if let identityToken {
                             // limited login
                             continuation.resume {
-                                try await self.identityTokenLogin(token: identityToken, nonce: nonce, origin: origin, scope: scope)
+                                try await self.identityTokenLogin(reachFive: reachFive, token: identityToken, nonce: nonce, origin: origin, scope: scope)
                             }
                         } else {
                             continuation.resume(throwing: ReachFiveError.TechnicalError(reason: "No access or identity token from Facebook"))
@@ -158,8 +163,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
 
     /// Classic login: exchanges the Facebook access token for a ReachFive token.
     /// Reach5 exposes no higher-level helper for that exchange, hence the direct API call.
-    private func accessTokenLogin(token: AccessToken, origin: String, scope: [String]?) async throws -> AuthToken {
-        let reachFive = try requireReachFive()
+    private func accessTokenLogin(reachFive: ReachFive, token: AccessToken, origin: String, scope: [String]?) async throws -> AuthToken {
         let loginProviderRequest = LoginProviderRequest(
             provider: providerConfig.providerWithVariant,
             providerToken: token.tokenString,
@@ -175,8 +179,8 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
 
     /// Limited login: the core SDK exchanges the Facebook identity token for a ReachFive token,
     /// running the same `/oauth/authorize` then `/oauth/token` exchange as Sign In With Apple.
-    private func identityTokenLogin(token: FBSDKCoreKit.AuthenticationToken, nonce: Pkce, origin: String, scope: [String]?) async throws -> AuthToken {
-        try await requireReachFive().login(
+    private func identityTokenLogin(reachFive: ReachFive, token: FBSDKCoreKit.AuthenticationToken, nonce: Pkce, origin: String, scope: [String]?) async throws -> AuthToken {
+        try await reachFive.login(
             withProvider: providerConfig.providerWithVariant,
             idToken: token.tokenString,
             nonce: nonce,
