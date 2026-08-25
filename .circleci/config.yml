@@ -12,43 +12,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install CocoaPods
-          command: gem install cocoapods --user-install
-      - run:
-          name: Check Reach5Facebook
-          command: |
-            pod install
-            pod lib lint Reach5Facebook.podspec
-  build-for-release:
-    macos:
-      xcode: "16.4.0"
-    steps:
-      - checkout
-      - run:
-          name: Install CocoaPods
-          command: gem install cocoapods --user-install
-      - run:
-          name: Check Reach5Facebook
-          command: |
-            pod install
-            pod spec lint Reach5Facebook.podspec
-
-  publish:
-    macos:
-      xcode: "16.4.0"
-    steps:
-      - checkout
-      - run:
-          name: Install CocoaPods
-          command: gem install cocoapods --user-install
-      - run: pod trunk push Reach5Facebook.podspec
-
-default_workflows_filters: &default_workflows_filters
-  filters:
-    tags:
-      only: /.*/
-    branches:
-      ignore: /.*/
+          name: Build Reach5Facebook (SPM)
+          command: xcodebuild build -scheme Reach5Facebook -destination 'generic/platform=iOS'
 
 default_workflows_tags: &default_workflows_tags
   filters:
@@ -61,9 +26,3 @@ workflows:
     jobs:
       - build:
           <<: *default_workflows_tags
-      - build-for-release:
-          <<: *default_workflows_filters
-      - publish:
-          requires:
-            - build-for-release
-          <<: *default_workflows_filters
