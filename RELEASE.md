@@ -8,7 +8,7 @@ Update to latest package versions of dependencies for SPM in XCode or with this 
     swift package update
     ```
 
-3. Update the [CHANGELOG.md](CHANGELOG.md) file
+3. Update the [CHANGELOG.md](CHANGELOG.md) file (don't forget to move the unreleased changes to their own section)
 
 4. Test the modifications on the SPM project DemoSharedCredentials.
 

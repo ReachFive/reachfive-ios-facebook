@@ -1,13 +1,13 @@
 {
-  "originHash" : "5f660b34facf2a3291a275a6953f60a519f79d46b9fcdf7e0a6a73cc21d0fb1d",
+  "originHash" : "6b2bb26791bb0a82e268efe2017a24b99860c8fe0ed2a66ed710cea57a9a03d9",
   "pins" : [
     {
       "identity" : "facebook-ios-sdk",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/facebook/facebook-ios-sdk.git",
       "state" : {
-        "revision" : "619d1772808425faa010d92293b26eeb9bc1d630",
-        "version" : "17.4.0"
+        "revision" : "3818dd2ccb6547c6d320ff68a1bd599789c3a44f",
+        "version" : "18.1.0"
       }
     },
     {
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ReachFive/reachfive-ios.git",
       "state" : {
-        "revision" : "54d0c278a622eb603453dd2e9c2b4e5eebf71457",
-        "version" : "10.0.0"
+        "revision" : "6a328035e939101329786757af2f2130f80a8cb1",
+        "version" : "11.0.0"
       }
     }
   ],

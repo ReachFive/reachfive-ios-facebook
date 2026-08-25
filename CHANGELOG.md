@@ -2,8 +2,18 @@
 
 ## Unreleased
 
+## v9.0.0
+
 ### Breaking changes
+- Requires Reach5 11.0.0 or later, whose `Provider` protocol this version implements.
 - `login` takes a `presenting: Presentation` parameter instead of `viewController: UIViewController?`, although it is not used (the Facebook SDK manages its own presentation).
+- CocoaPods support is dropped, the SDK is distributed exclusively with Swift Package Manager.
+
+### Other changes
+- A limited login with no explicit `scope` now requests the scope of the client configuration, as the classic login already did, instead of an empty scope.
+
+### Dependencies
+- Updated Facebook from 17.4 to 18.1
 
 ## v8.0.1
 ### Bug fixes
