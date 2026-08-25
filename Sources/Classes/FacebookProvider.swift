@@ -79,6 +79,10 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         return try await doFacebookLogin(scope: scope, origin: origin, viewController: viewController)
     }
 
+    /// Isolated to the main actor because it drives the Facebook SDK's UI: `logIn` is documented as
+    /// having to be called on the main thread ("This method will present a UI to the user and thus
+    /// should be called on the main thread")
+    @MainActor
     private func doFacebookLogin(
         scope: [String]?,
         origin: String,
