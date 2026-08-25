@@ -81,14 +81,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
 
     /// Isolated to the main actor because it drives the Facebook SDK's UI: `logIn` is documented as
     /// having to be called on the main thread ("This method will present a UI to the user and thus
-    /// should be called on the main thread"), and it does present one, synchronously — it starts an
-    /// `ASWebAuthenticationSession`, which immediately asks Facebook's bridge for a presentation
-    /// anchor, which reads `UIApplication.shared.keyWindow`. `login` being a plain async method,
-    /// without this its body ran on a cooperative background thread: UIKit off the main thread —
-    /// unsupported, and reported by the Main Thread Checker.
-    ///
-    /// Nothing here blocks the main thread: `logIn` returns as soon as the session is started, and
-    /// the ReachFive calls made from its completion handler suspend.
+    /// should be called on the main thread")
     @MainActor
     private func doFacebookLogin(
         scope: [String]?,
