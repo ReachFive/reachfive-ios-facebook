@@ -10,10 +10,12 @@ public class FacebookProvider: ProviderCreator {
     public var name: String = NAME
     public var variant: String?
     public var prefersLoginTracking: LoginTracking
+    public var appSwitch: AppSwitch
 
-    public init(variant: String? = nil, prefersLoginTracking: LoginTracking = .limited) {
+    public init(variant: String? = nil, prefersLoginTracking: LoginTracking = .limited, appSwitch: AppSwitch = AppSwitch.enabled) {
         self.variant = variant
         self.prefersLoginTracking = prefersLoginTracking
+        self.appSwitch = appSwitch
     }
 
     public func create(
@@ -25,18 +27,21 @@ public class FacebookProvider: ProviderCreator {
             reachFive: reachFive,
             providerConfig: providerConfig,
             clientConfigResponse: clientConfigResponse,
-            prefersLoginTracking: prefersLoginTracking
+            prefersLoginTracking: prefersLoginTracking,
+            appSwitch: appSwitch
         )
     }
 }
 
 public class ConfiguredFacebookProvider: NSObject, Provider {
-    public var name: String = FacebookProvider.NAME
+    public let name: String = FacebookProvider.NAME
 
-    var providerConfig: ProviderConfig
-    var clientConfigResponse: ClientConfigResponse
+    let providerConfig: ProviderConfig
+    let clientConfigResponse: ClientConfigResponse
 
-    var prefersLoginTracking: LoginTracking
+    let prefersLoginTracking: LoginTracking
+    let appSwitch: AppSwitch
+
 
     /// `weak`: ReachFive retains its providers, a strong reference here would create a
     /// ReachFive ↔ ConfiguredFacebookProvider cycle and the SDK graph would never be deallocated.
@@ -46,12 +51,14 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         reachFive: ReachFive,
         providerConfig: ProviderConfig,
         clientConfigResponse: ClientConfigResponse,
-        prefersLoginTracking: LoginTracking
+        prefersLoginTracking: LoginTracking,
+        appSwitch: AppSwitch
     ) {
         self.reachFive = reachFive
         self.providerConfig = providerConfig
         self.clientConfigResponse = clientConfigResponse
         self.prefersLoginTracking = prefersLoginTracking
+        self.appSwitch = appSwitch
     }
 
     public override var description: String {
@@ -126,7 +133,8 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
             permissions: providerConfig.scope ?? ["email", "public_profile"],
             // Facebook seems to force .limited when trackingAuthorizationStatus != .authorized
             tracking: suggestedTracking,
-            nonce: nonce.codeChallenge
+            nonce: nonce.codeChallenge,
+            appSwitch: appSwitch
         )
         else {
             throw ReachFiveError.TechnicalError(reason: "Couldn't create FBSDKLoginKit.LoginConfiguration")
