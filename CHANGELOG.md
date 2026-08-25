@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Breaking changes
+- `login` takes a `presenting: Presentation` parameter instead of `viewController: UIViewController?`, although it is not used (the Facebook SDK manages its own presentation).
+
 ## v8.0.1
 ### Bug fixes
 - Support Reach5 dependency version for new major version

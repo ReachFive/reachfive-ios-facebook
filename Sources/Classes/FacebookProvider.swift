@@ -16,16 +16,18 @@ public class FacebookProvider: ProviderCreator {
         self.prefersLoginTracking = prefersLoginTracking
     }
 
+    
+    //TODO: utiliser la nouvelle méthode create pour avoir  l'objet ReachFive pour factoriser le code
+    // Mettre à jour le SDK Facebook
     public func create(
-        sdkConfig: SdkConfig,
+        reachFive: ReachFive,
         providerConfig: ProviderConfig,
-        reachFiveApi: ReachFiveApi,
         clientConfigResponse: ClientConfigResponse
     ) -> Provider {
         ConfiguredFacebookProvider(
-            sdkConfig: sdkConfig,
+            sdkConfig: reachFive.sdkConfig,
             providerConfig: providerConfig,
-            reachFiveApi: reachFiveApi,
+            reachFiveApi: reachFive.reachFiveApi,
             clientConfigResponse: clientConfigResponse,
             prefersLoginTracking: prefersLoginTracking
         )
@@ -60,10 +62,11 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         "Provider: \(name)"
     }
 
+    // Le paramètre presenting n'est pas utilisé : le SDK Facebook gère sa propre présentation.
     public func login(
         scope: [String]?,
         origin: String,
-        viewController: UIViewController?
+        presenting: Presentation
     ) async throws -> AuthToken {
 
         if let token = AccessToken.current, !token.isExpired {
@@ -72,11 +75,11 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
                 return try await accessTokenLogin(token: token, origin: origin, scope: scope)
             } catch {
                 // Si l'utilisateur a changé son trackingAuthorizationStatus de .authorized à .denied par exemple.
-                return try await self.doFacebookLogin(scope: scope, origin: origin, viewController: viewController)
+                return try await self.doFacebookLogin(scope: scope, origin: origin)
             }
         }
 
-        return try await doFacebookLogin(scope: scope, origin: origin, viewController: viewController)
+        return try await doFacebookLogin(scope: scope, origin: origin)
     }
 
     /// Isolated to the main actor because it drives the Facebook SDK's UI: `logIn` is documented as
@@ -85,8 +88,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
     @MainActor
     private func doFacebookLogin(
         scope: [String]?,
-        origin: String,
-        viewController: UIViewController?
+        origin: String
     ) async throws -> AuthToken {
         // Facebook semble incapable de donner le jeton d'identité (AuthenticationToken.current) correspondant à la dernière connexion.
         // cf. https://github.com/facebook/facebook-ios-sdk/issues/1663
@@ -172,7 +174,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
             "client_id": self.sdkConfig.clientId,
             "id_token": token.tokenString,
             "response_type": "code",
-            "redirect_uri": self.sdkConfig.scheme,
+            "redirect_uri": self.sdkConfig.redirectUri.absoluteString,
             "scope": (scope ?? []).joined(separator: " "),
             "code_challenge": pkce.codeChallenge,
             "code_challenge_method": pkce.codeChallengeMethod,
@@ -187,7 +189,7 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
         let authCodeRequest = AuthCodeRequest(
             clientId: sdkConfig.clientId,
             code: code,
-            redirectUri: sdkConfig.scheme,
+            redirectUri: sdkConfig.redirectUri,
             pkce: pkce
         )
         let response = try await reachFiveApi.authWithCode(authCodeRequest: authCodeRequest)
@@ -216,10 +218,6 @@ public class ConfiguredFacebookProvider: NSObject, Provider {
 
     public func applicationDidBecomeActive(_ application: UIApplication) {
         AppEvents.shared.activateApp()
-    }
-
-    public func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        true
     }
 
     public func logout() {
