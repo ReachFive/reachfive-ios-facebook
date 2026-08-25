@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v9.0.0
+
 ### Breaking changes
 - Requires Reach5 11.0.0 or later, whose `Provider` protocol this version implements.
 - `login` takes a `presenting: Presentation` parameter instead of `viewController: UIViewController?`, although it is not used (the Facebook SDK manages its own presentation).
