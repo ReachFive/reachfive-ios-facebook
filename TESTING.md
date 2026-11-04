@@ -7,8 +7,8 @@ Walk this list when changing the provider or bumping the Facebook SDK.
 
 ## Reading the log
 
-The provider prints `[Reach5Facebook.Facebook] …` lines, **in `DEBUG` builds only**. Build the host
-app with `SdkInternalConfig(loggingEnabled: true)` as well, to get the `➡️ REQUEST` / `⬅️ RESPONSE`
+Use the debug/logs branch to have the provider print debug information.
+Build the host app with `SdkInternalConfig(loggingEnabled: true)` as well, to get the `➡️ REQUEST` / `⬅️ RESPONSE`
 pairs with statuses and bodies.
 
 Telling the two exchanges apart on the wire:
